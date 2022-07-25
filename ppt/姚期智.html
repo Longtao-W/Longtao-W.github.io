@@ -1,0 +1,1035 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <title>隐私计算</title>
+  <style type="text/css">
+    /* Color Palette Based on Monokai
+
+white       : #fafafa
+light grey  : #efefef
+grey        : #75715e
+dark grey   : #272822
+black       : #191919
+
+light blue  : #66d9ef
+blue        : #1db4d0
+lavender    : #bf79db
+magenta     : #f92672
+light green : #a6e22e
+*/
+
+@import url(https://fonts.googleapis.com/css?family=Hind:400,500,600,700,300);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700);
+@import url(https://fonts.googleapis.com/css?family=Inconsolata:400,700);
+
+/* Theme Styles */
+body {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
+  font-size: 100%;
+  color: #191919;
+  background-color: #000;
+}
+
+/* Custom Slide Styles */
+#slide-1 {
+  color: #fafafa;
+  background: #222;
+  background-size: cover;
+}
+#slide-1::after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: " ";
+  width: 100%;
+  height: 100%;
+  opacity: 0.5;
+  background: url('background-image.jpg') center center no-repeat;
+  background-size: cover;
+}
+
+#slide-1 h1 {
+  text-shadow: 1px 2px 4px #191919;
+}
+
+#slide-1 p {
+  text-shadow: 1px 1px 1px #191919;
+}
+
+.center {
+  text-align: center;
+}
+
+img.badge {
+  height: 128px;
+  width: 128px !important;
+  border-radius: 50% !important;
+}
+
+
+/* The following is needed for the ESC overview slide selection */
+.slides {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.slides.active .slide:not(.hidden) {
+  border: 22px solid red;
+}
+
+.slide-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9;
+  cursor: pointer;
+  display: none;
+}
+
+.slides.active .slide:hover .slide-overlay::before {
+  content: '▶';
+  text-align: center;
+  line-height: 300px;
+  font-size: 200px;
+  color: #fff;
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.slides.active .slide:hover .slide-overlay{
+  display: block;
+  background: rgba(0,0,0,0.5);
+}
+.slide-wrapper {
+  margin: 7px;
+  transition: all 250ms;
+}
+
+/* Presentation Styles */
+.slide {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 100px;
+  z-index: 1;
+  overflow: hidden;
+  box-sizing: border-box;
+  background-color: #FFF;
+}
+
+.slide::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: " ";
+  width: 100%;
+  height: 100%;
+  opacity: 0.4;
+  background: url('clean-white-polygon-backgrounds-7.jpg') center center no-repeat;
+  background-size: cover;
+  z-index: 1;
+}
+
+.slide-content {
+  position: relative;
+  z-index: 2;
+  opacity: 1;
+  max-width: 800px;
+  max-height: 600px;
+  margin: 80px auto 0 auto;
+  padding: 0;
+  font-size: 200%;
+  font-weight: 200;
+  line-height: 1.375;
+  overflow: hidden;
+}
+
+.slide-content img {
+  width: 100%;
+  border-radius: 3px;
+}
+
+.controls {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  z-index: 3;
+}
+
+.overview {
+  display: inline-block;
+  float: left;
+  color: #C7C7C7;
+  margin-right: 15px;
+  font-weight: bold;
+  font-size: 30px;
+  line-height: 30px;
+  cursor: pointer;
+}
+.overview:hover {
+  color: #1DB4D0;
+}
+.arrow {
+  float: left;
+  height: 0;
+  width: 0;
+  margin-right: 15px;
+  border: 15px solid #C7C7C7;
+  -webkit-touch-callout: none;
+    -webkit-user-select: none;
+     -khtml-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+}
+
+.prev {
+  border-top-color: transparent;
+  border-right-width: 25px;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  border-left-width: 0;
+}
+
+.next {
+  border-top-color: transparent;
+  border-right-color: transparent;
+  border-right-width: 0;
+  border-bottom-color: transparent;
+  border-left-width: 25px;
+}
+
+.prev:hover {
+  border-right-color: #1DB4D0;
+  cursor: pointer;
+}
+
+.next:hover {
+  border-left-color: #1DB4D0;
+  cursor: pointer;
+}
+
+h1,
+h2,
+h3 {
+  font-family: 'Hind', sans-serif;
+  font-weight: 500;
+}
+
+h1 {
+  margin: 170px 0 0;
+  font-size: 300%;
+  text-align: center;
+  line-height: 1.2;
+}
+
+h2 {
+  margin: 5px 0;
+  font-size: 100%;
+  font-weight: 200;
+  text-align: center;
+  line-height: 1.2;
+}
+
+h3 {
+  margin: 0;
+  padding-bottom: 15px;
+  font-size: 140%;
+  line-height: 1.2;
+  border-bottom: 1px ridge #191919;
+}
+
+ul {
+  font-weight: 200;
+  line-height: 1.375;
+  padding: 20px 0 0 60px;
+}
+
+blockquote {
+  padding-left: 20px;
+  margin-left: 0;
+  background: #efefef;
+  border-left: 5px solid #272822;
+  border-radius: 0 3px 3px 0;
+}
+
+blockquote p {
+  padding: .5em;
+  color: #272822;
+}
+
+.left {
+  float: left;
+  width: 48%;
+}
+
+.right {
+  float: right;
+  width: 48%;
+}
+
+.author h1 {
+  margin-bottom: 30px;
+  font-size: 170%;
+  font-weight: 200;
+  text-align: center;
+}
+
+.author h3 {
+  font-size: 95%;
+  font-weight: 100;
+  text-align: center;
+  border: none;
+}
+
+.author h3.twitter::before {
+  content: 'Twitter: ';
+}
+
+.author h3.github::before {
+  content: 'Github: ';
+}
+
+.author h3.email::before {
+  content: 'Email: ';
+}
+
+.author h3.url::before {
+  content: 'Web: ';
+}
+
+a {
+  text-decoration: none;
+  color: #1db4d0;
+}
+
+a:hover {
+  color: #1db4d0;
+  border-bottom: 1px solid #1db4d0;
+}
+
+hr {
+  border: 1px solid #272822;
+}
+
+pre {
+  font-size: 75%;
+  line-height: 1.3;
+}
+
+table td,
+table th {
+  padding-right: 3em;
+  text-align: left;
+}
+
+.progress {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 3px;
+  z-index: 2;
+}
+
+.progress-bar {
+  height: 3px;
+  width: 0;
+  background-color: #1DB4D0;
+  -webkit-transition: width .15s ease-out;
+     -moz-transition: width .15s ease-out;
+       -o-transition: width .15s ease-out;
+          transition: width .15s ease-out;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Code Highlighting */
+code {
+  padding: .1em .35em;
+  font-family: 'Inconsolata';
+  background-color: #fafafa;
+  border-radius: 3px;
+}
+
+pre code {
+  display: block;
+  padding: .5em;
+  font-family: 'Inconsolata';
+  font-weight: 400;
+  overflow-y: hidden;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+/*
+
+github.com style (c) Vasily Polovnyov <vast@whiteants.net>
+
+*/
+code.lang-bash-blank{
+  background: #000;
+  color: #fff!important;
+}
+code.lang-bash-blank-small{
+  background: #000;
+  color: #fff!important;
+  font-size: 0.45em;
+}
+
+kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  color: #555;
+  vertical-align: middle;
+  background-color: #fcfcfc;
+  border: solid 1px #ccc;
+  border-bottom-color: #bbb;
+  border-radius: 6px;
+  box-shadow: inset 0 -4px 0 #bbb;
+}
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  color: #333;
+  background: #f8f8f8;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #998;
+  font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-subst {
+  color: #333;
+  font-weight: bold;
+}
+
+.hljs-number,
+.hljs-literal,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag .hljs-attr {
+  color: #008080;
+}
+
+.hljs-string,
+.hljs-doctag {
+  color: #d14;
+}
+
+.hljs-title,
+.hljs-section,
+.hljs-selector-id {
+  color: #900;
+  font-weight: bold;
+}
+
+.hljs-subst {
+  font-weight: normal;
+}
+
+.hljs-type,
+.hljs-class .hljs-title {
+  color: #458;
+  font-weight: bold;
+}
+
+.hljs-tag,
+.hljs-name,
+.hljs-attribute {
+  color: #000080;
+  font-weight: normal;
+}
+
+.hljs-regexp,
+.hljs-link {
+  color: #009926;
+}
+
+.hljs-symbol,
+.hljs-bullet {
+  color: #990073;
+}
+
+.hljs-built_in,
+.hljs-builtin-name {
+  color: #0086b3;
+}
+
+.hljs-meta {
+  color: #999;
+  font-weight: bold;
+}
+
+.hljs-deletion {
+  background: #fdd;
+}
+
+.hljs-addition {
+  background: #dfd;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+/* Responsiveness */
+@media (max-width: 850px) {
+  body {
+    font-size: 70%;
+  }
+
+  .slide {
+    padding: 50px;
+  }
+
+  .slide-content {
+    width: auto;
+  }
+
+  img {
+    width: 100%;
+    border-radius: 3px;
+  }
+
+  h1 {
+    margin-top: 120px;
+  }
+
+  .prev,
+  .prev:hover {
+    border-right-color: rgba(135, 135, 135, .5);
+  }
+
+  .next,
+  .next:hover {
+    border-left-color: rgba(135, 135, 135, .5);
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    overflow: hidden;
+    font-size: 50%;
+  }
+
+  .slide {
+    padding: 10px;
+  }
+  .slide-content {
+    height: 340px;
+    padding: 10px;
+    margin-top: 10px;
+  }
+
+  h1 {
+    margin-top: 50px;
+  }
+
+  ul {
+    padding-left: 25px;
+  }
+}
+
+@media print {
+  * {
+    -webkit-print-color-adjust: exact;
+  }
+
+  @page {
+    size: letter;
+  }
+
+  .hidden {
+    display: inline;
+  }
+
+  html {
+    height: 100%;
+    width: 100%;
+    overflow: visible;
+  }
+
+  body {
+    float: none !important;
+    padding: 0;
+    margin: 0 auto !important;
+    overflow: visible;
+    font-size: 52%;
+    background: none !important;
+    border: 0;
+  }
+
+  .progress,
+  .controls {
+    display: none;
+  }
+
+  .slide {
+    position: static;
+  }
+
+  .slide-content {
+    margin-top: 0;
+    margin-bottom: 40px;
+    height: 3.5in;
+    overflow: visible;
+    border: 1px solid #222;
+
+  }
+
+  .slide:nth-child(even) {
+    /* 2 slides per page */
+    page-break-before: always;
+  }
+}
+
+  </style>
+</head>
+<body>
+    <div class="progress">
+    <div class="progress-bar"></div>
+  </div>
+
+<div class="slides">
+    <div class="slide-wrapper">
+      <div class="slide" id="slide-1">
+        <div data-id="1" class="slide-overlay"></div>
+        <section class="slide-content"><h1 id="-">隐私计算</h1>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-2">
+        <div data-id="2" class="slide-overlay"></div>
+        <section class="slide-content"><h2 id="1982-"><strong>1982年姚的百万富翁问题</strong></h2>
+<p><strong>两个富翁想比较谁更富有，但是不想让别人知道自己有多少钱。在没有可信的第三方的情况下怎么比较？</strong></p>
+<p><img src="https://cdn.pixabay.com/photo/2014/04/05/11/29/two-315913__340.jpg" alt="二, 看法, 人, 第一的, 手掌, 孤立, 两个都, 手, 拿, 白色的"></p>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-3">
+        <div data-id="3" class="slide-overlay"></div>
+        <section class="slide-content"><p><strong>姚期智</strong></p>
+<p><a href="https://research.cs.wisc.edu/areas/sec/yao1982-ocr.pdf">姚期智的论文原文</a>
+<img src="data:image/jpeg;base64,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" alt="我眼中的姚期智院士| 近距离看姚期智及其人生经历"></p>
+<p><strong>数学描述</strong></p>
+<p>A、B分别有i,j(0&lt;i,j&lt;=10，可扩展)亿资产，A、B都想知道谁更富有(半诚实模型，给的数据和执行流程可信)</p>
+<p>安全模型：<strong>Real-Ideal Paradigm（理想模型）</strong>、<strong>Semi-Honest Security（半诚实模型）</strong>、<strong>Malicious Security（恶意模型）</strong>，现实世界中理想模型不存在</p>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-4">
+        <div data-id="4" class="slide-overlay"></div>
+        <section class="slide-content"><h2 id="-"><strong>解法</strong></h2>
+<p>简要步骤:</p>
+<ol>
+<li>A构造出 n 个顺序的锁(钥匙一样)，前i个都为0,后面为1</li>
+<li>B从n个锁中选择第j个锁，交给A</li>
+<li>A检查锁中值是0或1得到结果</li>
+</ol>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden dg" id="slide-5">
+        <div data-id="5" class="slide-overlay"></div>
+        <section class="slide-content"><p><strong>不经意传输Oblivious Transfer </strong></p>
+<p>发送方可以向接收方传输一系列信息中的某一部分，接收方可以正确收到信息，但不知道信息属于整体的哪个部分
+基本三种：1/2概率收到、1-2OT协议、1-NOT协议
+实现方式很多，常用rsa来实现(大质数分解属于NP问题)</p>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-6">
+        <div data-id="6" class="slide-overlay"></div>
+        <section class="slide-content"><p><strong>1-2OT协议</strong></p>
+<ol>
+<li>A给B两个rsa公钥，B自己选个随机数用其中一个公钥(想检查的二者之一)加密给A</li>
+<li>A用两个密钥解密，并分别与两个秘密XOR，将结果传递给B</li>
+<li>B与自己的随机数异或能得到正确结果，若设计的不好，可能要传两个随机数</li>
+</ol>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden dg blink" id="slide-7">
+        <div data-id="7" class="slide-overlay"></div>
+        <section class="slide-content"><p><strong>混淆电路</strong>
+步骤</p>
+<ol>
+<li>A生成混淆电路</li>
+<li>B获取A的值，基于OT协议</li>
+<li>B计算电路的到结果</li>
+</ol>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden  " id="slide-8">
+        <div data-id="8" class="slide-overlay"></div>
+        <section class="slide-content"><p><strong>生成混淆电路</strong></p>
+<ol>
+<li>A对逻辑进行简化，都可简化成一些逻辑门的集合，以最简单的and举例</li>
+<li>A对于每个真值表的0,1用字符串进行替换，然后再用两个输入对称加密输出ENCac(d)</li>
+<li>A对ENCac(d)顺序打乱</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>a</th>
+<th>c</th>
+<th>d</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Xa0</td>
+<td>Xc0</td>
+<td>Xd0  -&gt;ENCa0c0(d0)</td>
+</tr>
+<tr>
+<td>Xa0</td>
+<td>Xc1</td>
+<td>Xd0 -&gt;ENCa0c1(d0)</td>
+</tr>
+<tr>
+<td>Xa1</td>
+<td>Xc0</td>
+<td>Xd0 -&gt;ENCa1c0(d0)</td>
+</tr>
+<tr>
+<td>Xa1</td>
+<td>Xc1</td>
+<td>Xd1 -&gt;ENCa1c1(d1)</td>
+</tr>
+</tbody>
+</table>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-9">
+        <div data-id="9" class="slide-overlay"></div>
+        <section class="slide-content"><p><strong>数据传递</strong></p>
+<ol>
+<li>A把自己的输入对应的字符串（假设是Xa0）发送给B</li>
+<li>B通过不经意传输获取自己的输出对应的字符串（假设是Xc1）</li>
+<li>A给B打乱后的ENCac(d)</li>
+</ol>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-10">
+        <div data-id="10" class="slide-overlay"></div>
+        <section class="slide-content"><p><strong>计算</strong></p>
+<p>B拥有A的输入Xa0、自己的Xc1，对ENCac(d)逐个解密，可获得真实结果</p>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-11">
+        <div data-id="11" class="slide-overlay"></div>
+        <section class="slide-content"><p><strong>密钥共享Secret Sharing</strong></p>
+<p>密钥分享的基本思路是将每个数字拆散成多个数，并将这些数分发到多个参与方</p>
+<p>例子:算工资，设置一个最大数值范围，每个人给别人一个数字，可以提前超支出，但是经过n次分发后进行相加</p>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-12">
+        <div data-id="12" class="slide-overlay"></div>
+        <section class="slide-content"><p><strong>随机预言机Random Oracle</strong></p>
+<ol>
+<li>如果x和H(x)已经在表里记录过，就输出H(x)</li>
+<li>如果没有关于x的记录，则RO完全随机地在值域中选取一个0,1字符串（或者从其他希望映射到的元素集合中完全随机的选取）当作H(x)，把这个和x一起记录在表里，然后输出这个H(x)。</li>
+</ol>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-13">
+        <div data-id="13" class="slide-overlay"></div>
+        <section class="slide-content"><p><strong>零知识证明</strong></p>
+<p>零知识证明指的是证明者能够在不向验证者提供任何有用的信息的情况下，使验证者相信某个论断是正确的。</p>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-14">
+        <div data-id="14" class="slide-overlay"></div>
+        <section class="slide-content"><p><strong>差分隐私differential privac</strong></p>
+<p>如果随机修改数据库中的一个记录造成的影响足够小，求得的统计特征就不能被用来反推出单一记录的内容</p>
+</section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden" id="slide-15">
+        <div data-id="15" class="slide-overlay"></div>
+        <section class="slide-content"><iframe src="//player.bilibili.com/player.html?aid=208143004&bvid=BV14h411n7ok&cid=413404302&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe></section>
+      </div>
+    </div>
+    <div class="slide-wrapper">
+      <div class="slide hidden author-slide" id="slide-16">
+        <div data-id="16" class="slide-overlay"></div>
+        <section class="slide-content"><div class="author">
+  <h1 class="name">Longtao</h1>
+    <h3 class="github">
+      <a href="https://github.com/eust-w">eust-w</a>
+    </h3>
+    <h3 class="url">
+      <a href="https://longtao.fun">https://longtao.fun</a>
+    </h3>
+    <h3 class="email">
+      <a href="mailto:eustancewu@gmail.com">eustancewu@gmail.com</a>
+    </h3>
+</div>
+</section>
+      </div>
+    </div>
+</div>
+
+  <div class="controls">
+    <div class="arrow prev"></div>
+    <div class="overview">☷</div>
+    <div class="arrow next"></div>
+  </div>
+
+
+  <script type="text/javascript">
+    /**
+ * Returns the current page number of the presentation.
+ */
+function currentPosition() {
+  return parseInt(document.querySelector('.slide:not(.hidden)').id.slice(6));
+}
+
+/**
+ * Navigates forward n pages
+ * If n is negative, we will navigate in reverse
+ */
+function navigate(n) {
+  var position = currentPosition();
+  var numSlides = document.getElementsByClassName('slide').length;
+
+  var $fragments = document.querySelectorAll('#slide-' + position + ' .fragment');
+  var fragmentsFinished = false;
+  if ($fragments.length) {
+    if (n > 0) {
+      var $f = document.querySelectorAll('#slide-' + position + ' .fragment.hidden');
+      if (!$f.length) fragmentsFinished = true;
+      else $f[0].classList.remove('hidden');
+    } else {
+      var $f = document.querySelectorAll('#slide-' + position + ' .fragment:not(.hidden)');
+      if (!$f.length) fragmentsFinished = true;
+      else $f[$f.length - 1].classList.add('hidden');
+    }
+  } else {
+    fragmentsFinished = true;
+  }
+
+  if (fragmentsFinished) {
+    /* Positions are 1-indexed, so we need to add and subtract 1 */
+    var nextPosition = (position - 1 + n) % numSlides + 1;
+
+    /* Normalize nextPosition in-case of a negative modulo result */
+    nextPosition = (nextPosition - 1 + numSlides) % numSlides + 1;
+
+    document.getElementById('slide-' + position).classList.add('hidden');
+    document.getElementById('slide-' + nextPosition).classList.remove('hidden');
+
+    updateProgress();
+    updateURL();
+    updateTabIndex();
+  }
+
+}
+
+/**
+ * Updates the current URL to include a hashtag of the current page number.
+ */
+function updateURL() {
+  try {
+    window.history.replaceState({}, null, '#' + currentPosition());
+  } catch (e) {
+    window.location.hash = currentPosition();
+  }
+}
+
+/**
+ * Sets the progress indicator.
+ */
+function updateProgress() {
+  var progressBar = document.querySelector('.progress-bar');
+
+  if (progressBar !== null) {
+    var numSlides = document.getElementsByClassName('slide').length;
+    var position = currentPosition() - 1;
+    var percent = (numSlides === 1) ? 100 : 100 * position / (numSlides - 1);
+    progressBar.style.width = percent.toString() + '%';
+  }
+}
+
+/**
+ * Removes tabindex property from all links on the current slide, sets
+ * tabindex = -1 for all links on other slides. Prevents slides from appearing
+ * out of control.
+ */
+function updateTabIndex() {
+  var allLinks = document.querySelectorAll('.slide a');
+  var position = currentPosition();
+  var currentPageLinks = document.getElementById('slide-' + position).querySelectorAll('a');
+  var i;
+
+  for (i = 0; i < allLinks.length; i++) {
+    allLinks[i].setAttribute('tabindex', -1);
+  }
+
+  for (i = 0; i < currentPageLinks.length; i++) {
+    currentPageLinks[i].removeAttribute('tabindex');
+  }
+}
+
+/**
+ * Determines whether or not we are currently in full screen mode
+ */
+function isFullScreen() {
+  return document.fullscreenElement ||
+    document.mozFullScreenElement ||
+    document.webkitFullscreenElement ||
+    document.msFullscreenElement;
+}
+
+/**
+ * Toggle fullScreen mode on document element.
+ * Works on chrome (>= 15), firefox (>= 9), ie (>= 11), opera(>= 12.1), safari (>= 5).
+ */
+function toggleFullScreen() {
+  /* Convenient renames */
+  var docElem = document.documentElement;
+  var doc = document;
+
+  docElem.requestFullscreen =
+    docElem.requestFullscreen ||
+    docElem.msRequestFullscreen ||
+    docElem.mozRequestFullScreen ||
+    docElem.webkitRequestFullscreen.bind(docElem, Element.ALLOW_KEYBOARD_INPUT);
+
+  doc.exitFullscreen =
+    doc.exitFullscreen ||
+    doc.msExitFullscreen ||
+    doc.mozCancelFullScreen ||
+    doc.webkitExitFullscreen;
+
+  isFullScreen() ? doc.exitFullscreen() : docElem.requestFullscreen();
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Update the tabindex to prevent weird slide transitioning
+  updateTabIndex();
+
+  // If the location hash specifies a page number, go to it.
+  var page = window.location.hash.slice(1);
+  if (page) {
+    navigate(parseInt(page) - 1);
+  }
+
+  document.onkeydown = function(e) {
+    if(e.target.tagName.toLowerCase() === 'textarea') return;
+    var kc = e.keyCode;
+
+    // left, down, H, J, backspace, PgUp - BACK
+    // up, right, K, L, space, PgDn - FORWARD
+    // enter - FULLSCREEN
+    if (kc === 37 || kc === 40 || kc === 8 || kc === 72 || kc === 74 || kc === 33) {
+      navigate(-1);
+    } else if (kc === 38 || kc === 39 || kc === 32 || kc === 75 || kc === 76 || kc === 34) {
+      navigate(1);
+    } else if (kc === 13) {
+      toggleFullScreen();
+    } else if (kc === 27) {
+      toggleOverview();
+    }
+  };
+
+  if (document.querySelector('.next') && document.querySelector('.prev')) {
+    document.querySelector('.next').onclick = function(e) {
+      e.preventDefault();
+      navigate(1);
+    };
+
+    document.querySelector('.prev').onclick = function(e) {
+      e.preventDefault();
+      navigate(-1);
+    };
+  }
+  if (document.querySelector('.overview')) {
+    document.querySelector('.overview').onclick = function(e) {
+      toggleOverview();
+    }
+  }
+  var $overlays = document.querySelectorAll('.slide-overlay');
+  [].forEach.call($overlays, function($overlay) {
+    $overlay.onclick = function(event) {
+      navigate(parseInt(event.target.dataset.id) - currentPosition());
+      toggleOverview();
+    }
+  });
+
+  var $fragments = document.querySelectorAll('.fragment');
+  [].forEach.call($fragments, function($fragment) {
+    $fragment.classList.add('hidden');
+  });
+
+});
+
+function toggleOverview() {
+  if (window.$style !== undefined) {
+    window.$style.remove();
+    delete window.$style;
+    document.querySelector('.slides').classList.remove('active');
+  } else {
+    var $slides = document.querySelector('.slides');
+    $slides.classList.add('active');
+    var slidesList = document.querySelectorAll('.slide-wrapper');
+
+    var w = window,
+      d = document,
+      e = d.documentElement,
+      g = d.getElementsByTagName('body')[0],
+      x = w.innerWidth || e.clientWidth || g.clientWidth,
+      y = w.innerHeight || e.clientHeight || g.clientHeight;
+
+    window.$style = document.createElement('style');
+    window.$style.innerHTML = '.slide-wrapper {width: ' + (x * 0.25) + 'px; height: ' + (y * 0.25) + 'px; } body .slide {width: ' + x + 'px; height: ' + y + 'px; position: relative; transform: scale(0.25,0.25); transform-origin: 0 0; } .slide.hidden{display: block; }';
+
+    document.getElementsByTagName('head')[0].appendChild(window.$style);
+  }
+}
+  </script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+User-agent: *
+
+Disallow: /img/
+Disallow: /css/
+Disallow: /js/
+Disallow: /photos/
+Disallow: /*.css
+Disallow: /*.js
+
+Sitemap: https://longtao.fun/sitemap.xml
+Sitemap: https://longtao.fun/baidusitemap.xml
