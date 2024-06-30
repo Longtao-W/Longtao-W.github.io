@@ -1,0 +1,503 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Linux瓶颈分析 | LongTao</title><meta name="keywords" content="编程原理,linux"><meta name="author" content="LongTao"><meta name="copyright" content="LongTao"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="性能优化性能优化一项最重要的步骤就是寻找到系统的瓶颈 粗略分析系统响应慢，一般的瓶颈在IO、CPU、内存还有应用。 使用top查看 123456789101112131415[root@172-20-59-60 apt_ui]# toptop - 15:59:31 up 6 days,  1:10,  3 users,  load average: 0.00, 0.01, 0.05Tasks: 1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux瓶颈分析">
+<meta property="og:url" content="https://longtao.fun/metaverse/linuxperformanceanalysis/index.html">
+<meta property="og:site_name" content="LongTao">
+<meta property="og:description" content="性能优化性能优化一项最重要的步骤就是寻找到系统的瓶颈 粗略分析系统响应慢，一般的瓶颈在IO、CPU、内存还有应用。 使用top查看 123456789101112131415[root@172-20-59-60 apt_ui]# toptop - 15:59:31 up 6 days,  1:10,  3 users,  load average: 0.00, 0.01, 0.05Tasks: 1">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Longtao-W/pics@main/20211025/1635139608R-C.d63f9367c74e1dca73ffbcae473118fa?rik=c734OLrGXr8BPg&riu=http%3a%2f%2fwww.brendangregg.com%2fPerf%2flinux_observability_tools.png&ehk=nHWnEkal2z%2bT0vbSwBOdhejyU03bFpVvmJxFTX6A9tA%3d&risl=&pid=ImgRaw&r=0">
+<meta property="article:published_time" content="2021-05-05T15:20:21.000Z">
+<meta property="article:modified_time" content="2024-06-30T10:35:56.308Z">
+<meta property="article:author" content="LongTao">
+<meta property="article:tag" content="编程原理">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Longtao-W/pics@main/20211025/1635139608R-C.d63f9367c74e1dca73ffbcae473118fa?rik=c734OLrGXr8BPg&riu=http%3a%2f%2fwww.brendangregg.com%2fPerf%2flinux_observability_tools.png&ehk=nHWnEkal2z%2bT0vbSwBOdhejyU03bFpVvmJxFTX6A9tA%3d&risl=&pid=ImgRaw&r=0"><link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/Longtao-W/pics@main/20210916/avatar.71pjc2scvak0.jpg"><link rel="canonical" href="https://longtao.fun/metaverse/linuxperformanceanalysis/"><link rel="preconnect" href="//gcore.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><meta name="google-site-verification" content="sdbwdXxK4U7I4ceYAnHYcpwGX8xQ4-hNdNrcjv_JBlQ"/><meta name="msvalidate.01" content="code-fMOdRFFRNC"/><meta name="baidu-site-verification" content="code-HVJYJcKMKl"/><meta name="yandex-verification" content="3c4b526968322ac8"/><meta name="baidu_union_verify" content="2ab9384b0a4e3ca4ca1f3afb8ba13666"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?e21652fdbf95387cb76733c761128f39";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-HYN1NLVKJG"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-HYN1NLVKJG');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#1d2c47","bgDark":"#121212","position":"top-center"},
+  source: {
+    jQuery: 'https://gcore.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://gcore.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://gcore.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://gcore.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://gcore.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-06-30 18:35:56'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script><link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet"><link rel="stylesheet" href="/css/background.css"><style type="text/css">.aplayer.aplayer-fixed.aplayer-narrow .aplayer-body{left:-66px!important}.aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover{left:0!important}</style><link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/aplayer@1.7.0/dist/APlayer.min.css"><div id="aplayer"></div><script src="https://gcore.jsdelivr.net/npm/meting@2/dist/Meting.min.js" async></script><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="LongTao" type="application/atom+xml">
+</head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" data-lazy-src="https://cdn.jsdelivr.net/gh/Longtao-W/pics@main/20210916/avatar.71pjc2scvak0.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">78</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">27</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-cat"></i><span> 兴趣</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/game/"><i class="fa-fw fas fa-gamepad"></i><span> 游戏</span></a></li><li><a class="site-page child" href="/philosophy/"><i class="fa-fw fas fa-yin-yang"></i><span> 哲学</span></a></li><li><a class="site-page child" href="/physic/"><i class="fa-fw fas fa-atom"></i><span> 物理</span></a></li><li><a class="site-page child" href="/math/"><i class="fa-fw fas fa-brain"></i><span> 数学</span></a></li><li><a class="site-page child" href="/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/"><i class="fa-fw fas fa-yin-yang"></i><span> 计算机</span></a></li><li><a class="site-page child" href="/222"><span> にじげん</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-box"></i><span> 项目</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/os/"><i class="fa-fw fas fa-passport"></i><span> 开源项目</span></a></li><li><a class="site-page child" href="/ppt/"><i class="fa-fw fas fa-chart-bar"></i><span> ppt存档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-map"></i><span> 导航</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-address-book"></i><span> 友链</span></a></li><li><a class="site-page child" href="/sites/"><i class="fa-fw fas fa-tools"></i><span> 工具</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-heart"></i><span> 关于</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/about/web.html"><i class="fa-fw fas fa-blog"></i><span> 关于本站</span></a></li><li><a class="site-page child" href="/about/author.html"><i class="fa-fw fas fa-user"></i><span> 关于作者</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/other/"><i class="fa-fw fas fa-bars"></i><span> 其它</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/gh/Longtao-W/pics@main/20211025/1635139608R-C.d63f9367c74e1dca73ffbcae473118fa?rik=c734OLrGXr8BPg&amp;riu=http%3a%2f%2fwww.brendangregg.com%2fPerf%2flinux_observability_tools.png&amp;ehk=nHWnEkal2z%2bT0vbSwBOdhejyU03bFpVvmJxFTX6A9tA%3d&amp;risl=&amp;pid=ImgRaw&amp;r=0')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">LongTao</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-cat"></i><span> 兴趣</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/game/"><i class="fa-fw fas fa-gamepad"></i><span> 游戏</span></a></li><li><a class="site-page child" href="/philosophy/"><i class="fa-fw fas fa-yin-yang"></i><span> 哲学</span></a></li><li><a class="site-page child" href="/physic/"><i class="fa-fw fas fa-atom"></i><span> 物理</span></a></li><li><a class="site-page child" href="/math/"><i class="fa-fw fas fa-brain"></i><span> 数学</span></a></li><li><a class="site-page child" href="/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/"><i class="fa-fw fas fa-yin-yang"></i><span> 计算机</span></a></li><li><a class="site-page child" href="/222"><span> にじげん</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-box"></i><span> 项目</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/os/"><i class="fa-fw fas fa-passport"></i><span> 开源项目</span></a></li><li><a class="site-page child" href="/ppt/"><i class="fa-fw fas fa-chart-bar"></i><span> ppt存档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-map"></i><span> 导航</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-address-book"></i><span> 友链</span></a></li><li><a class="site-page child" href="/sites/"><i class="fa-fw fas fa-tools"></i><span> 工具</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-heart"></i><span> 关于</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/about/web.html"><i class="fa-fw fas fa-blog"></i><span> 关于本站</span></a></li><li><a class="site-page child" href="/about/author.html"><i class="fa-fw fas fa-user"></i><span> 关于作者</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/other/"><i class="fa-fw fas fa-bars"></i><span> 其它</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Linux瓶颈分析</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2021-05-05T15:20:21.000Z" title="undefined 2021-05-05 23:20:21">2021-05-05</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/">编程技术</a></span></div><div class="meta-secondline"></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h3 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h3><p>性能优化一项最重要的步骤就是寻找到系统的瓶颈</p>
+<h5 id="粗略分析"><a href="#粗略分析" class="headerlink" title="粗略分析"></a>粗略分析</h5><p>系统响应慢，一般的瓶颈在IO、CPU、内存还有应用。</p>
+<p>使用top查看</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">[root@172-20-59-60 apt_ui]# top</span><br><span class="line">top - 15:59:31 up 6 days,  1:10,  3 users,  load average: 0.00, 0.01, 0.05</span><br><span class="line">Tasks: 144 total,   1 running, 142 sleeping,   0 stopped,   1 zombie</span><br><span class="line"><span class="meta">%</span><span class="bash">Cpu(s):  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st</span></span><br><span class="line">KiB Mem :  8009636 total,  5126364 free,  2307032 used,   576240 buff/cache</span><br><span class="line">KiB Swap:        0 total,        0 free,        0 used.  5396772 avail Mem</span><br><span class="line"></span><br><span class="line">  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND</span><br><span class="line"> 9307 root      20   0  620968  28320   6064 S   0.0  0.4   3:39.37 python3</span><br><span class="line">  861 root      20   0  567404  16752   5992 S   0.0  0.2   0:57.56 tuned</span><br><span class="line">  651 root      20   0   21684   1324    988 S   0.0  0.0   0:47.08 irqbalance</span><br><span class="line">  662 avahi     20   0   55952   2392   1920 S   0.0  0.0   0:35.02 avahi-daemon</span><br><span class="line">  809 root      20   0  113440  12796    308 S   0.0  0.2   0:24.29 dhclient</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li> 输入M，进程列表按内存使用大小降序排序，便于我们观察最大内存使用者使用有问题</li>
+<li> 输入P，进程列表按CPU使用大小降序排序，便于我们观察最耗CPU资源</li>
+<li> 100.0 id 空闲CPU时间百分比，如果这个值过低，表明系统CPU存在瓶颈</li>
+<li> 0.0 wa 等待I/O的CPU时间百分比，如果这个值过高，表明IO存在瓶颈</li>
+</ol>
+<h5 id="内存瓶颈"><a href="#内存瓶颈" class="headerlink" title="内存瓶颈"></a>内存瓶颈</h5><p>一般使用free工具</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">[root@172-20-59-60 apt_ui]# free</span><br><span class="line">              total        used        free      shared  buff/cache   available</span><br><span class="line">Mem:        8009636     2306408     5126984       25144      576244     5397396</span><br><span class="line">Swap:             0           0           0</span><br></pre></td></tr></table></figure>
+
+<p>缺省时free的单位为KB</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>total</td>
+<td>总物理内存大小</td>
+</tr>
+<tr>
+<td>used</td>
+<td>已使用物理内存大小</td>
+</tr>
+<tr>
+<td>free</td>
+<td>未分配物理内存大小</td>
+</tr>
+<tr>
+<td>shared</td>
+<td>共享的物理内存大小</td>
+</tr>
+<tr>
+<td>buff/cache</td>
+<td>为了提高系统的读写速度（包含磁盘块的读写，文件的读写等），操作系统将部分内存作为缓存使用，该数值为缓存占用的物理内存大小</td>
+</tr>
+<tr>
+<td>available</td>
+<td>可用的物理内存大小</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>total</td>
+<td>Swap 分区的总大小</td>
+</tr>
+<tr>
+<td>used</td>
+<td>已使用的 Swap 分区大小</td>
+</tr>
+<tr>
+<td>free</td>
+<td>未使用的 Swap 分区大小</td>
+</tr>
+</tbody></table>
+<p>根据上表，在不考虑 Swap 分区的情况下，内存计算如下：<br>总内存大小：Mem.total = Mem.used + Mem.free + Mem.shared + Mem.buff/cache<br>理论上实际可用内存大小：Mem.actual = Mem.total - Mem.used - Mem.shared = Mem.free + Mem.buff/cache</p>
+<p>在考虑 Swap 分区的情况下，内存计算如下：<br>总内存大小：Mem.total = Mem.used + Mem.free + Mem.shared + Mem.buff/cache<br>理论上实际可用内存大小：Mem.actual = Mem.total - Mem.used - Mem.shared + Swap.free = Mem.free + Mem.buff/cache + Swap.free</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PageCache.size</td>
+<td>可以回收的 PageCache 大小，计算公式见上图</td>
+</tr>
+<tr>
+<td>SlabCache.size</td>
+<td>可以回收的 SlabCache 大小 ，计算公式见上图</td>
+</tr>
+<tr>
+<td>WaterMark.low</td>
+<td>支持系统使用的最低水位线，计算公式见上图</td>
+</tr>
+</tbody></table>
+<p>Mem.available = Mem.free + PageCache.size + SlabCache.size - WaterMark.low</p>
+<p>进一步的监视内存使用情况，可使用vmstat工具，可实时动态监视操作系统的内存和虚拟内存的动态变化使用情况</p>
+<p>vmstat [delay] [count] </p>
+<ul>
+<li>  delay是两次输出之间的延迟时间；</li>
+<li>  count是指按照这个时间间隔统计的次数。</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">[root@172-20-59-60 apt_ui]# vmstat 1 3</span><br><span class="line">procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----</span><br><span class="line"> r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st</span><br><span class="line"> 1  0      0 5126380   2068 574208    0    0     0    22    4    8  0  0 100  0  0</span><br><span class="line"> 0  0      0 5126488   2068 574208    0    0     0     0  422   53  0  0 100  0  0</span><br><span class="line"> 0  0      0 5126488   2068 574208    0    0     0     0  392   49  0  0 100  0  0</span><br></pre></td></tr></table></figure>
+
+<p>Procs（进程）:</p>
+<ul>
+<li>  r: 运行队列中进程数量</li>
+<li>  b: 等待IO的进程数量</li>
+</ul>
+<p>Memory（内存）:</p>
+<ul>
+<li>  swpd: 使用虚拟内存大小</li>
+<li>  free: 可用内存大小</li>
+<li>  buff: 用作缓冲的内存大小</li>
+<li>  cache: 用作缓存的内存大小</li>
+</ul>
+<p>Swap:</p>
+<ul>
+<li>  si: 每秒从交换区写到内存的大小</li>
+<li>  so: 每秒写入交换区的内存大小</li>
+</ul>
+<p>IO：（现在的Linux版本块的大小为1024bytes）</p>
+<ul>
+<li>  bi: 每秒读取的块数</li>
+<li>  bo: 每秒写入的块数</li>
+</ul>
+<p>system：</p>
+<ul>
+<li>  in: 每秒中断数，包括时钟中断</li>
+<li>  cs: 每秒上下文切换数</li>
+</ul>
+<p>CPU（以百分比表示）</p>
+<ul>
+<li>  us: 用户进程执行时间(user time)</li>
+<li>  sy: 系统进程执行时间(system time)</li>
+<li>  id: 空闲时间(包括IO等待时间)</li>
+<li>  wa: 等待IO时间</li>
+</ul>
+<p>内存测试工具我们使用Stream，基准测试，注意数据仅在相同软件相同版本有比较价值</p>
+<h5 id="IO瓶颈"><a href="#IO瓶颈" class="headerlink" title="IO瓶颈"></a>IO瓶颈</h5><p>如果IO存在性能瓶颈，top工具中的%wa会偏高</p>
+<p>可使用iostat 进一步分析</p>
+<p>iostat　[paras] [delay] [count] </p>
+<ul>
+<li>  -c显示CPU使用情况</li>
+<li>  -d 显示磁盘使用情况</li>
+<li>  -k 以 KB 为单位显示</li>
+<li>  -m 以 M 为单位显示</li>
+<li>  -N 显示磁盘阵列(LVM) 信息</li>
+<li>  -p[磁盘] 显示磁盘和分区的情况</li>
+<li>  -t 显示终端和CPU的信息</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">[root@172-20-59-60 apt_ui]# iostat 3 3</span><br><span class="line">Linux 3.10.0-693.el7.x86_64 (172-20-59-60)      12/31/2020      _x86_64_        (8 CPU)</span><br><span class="line"></span><br><span class="line">avg-cpu:  %user   %nice %system %iowait  %steal   %idle</span><br><span class="line">           0.03    0.00    0.02    0.02    0.00   99.93</span><br><span class="line"></span><br><span class="line">Device:            tps    kB_read/s    kB_wrtn/s    kB_read    kB_wrtn</span><br><span class="line">vda               0.08         0.59         0.88     308042     462261</span><br><span class="line">vdb               0.52         0.01       176.61       6256   92643328</span><br><span class="line"></span><br><span class="line">avg-cpu:  %user   %nice %system %iowait  %steal   %idle</span><br><span class="line">           0.04    0.00    0.00    0.00    0.00   99.96</span><br><span class="line"></span><br><span class="line">Device:            tps    kB_read/s    kB_wrtn/s    kB_read    kB_wrtn</span><br><span class="line">vda               0.00         0.00         0.00          0          0</span><br><span class="line">vdb               0.00         0.00         0.00          0          0</span><br><span class="line"></span><br><span class="line">avg-cpu:  %user   %nice %system %iowait  %steal   %idle</span><br><span class="line">           0.00    0.00    0.00    0.00    0.00  100.00</span><br><span class="line"></span><br><span class="line">Device:            tps    kB_read/s    kB_wrtn/s    kB_read    kB_wrtn</span><br><span class="line">vda               0.00         0.00         0.00          0          0</span><br><span class="line">vdb               0.00         0.00         0.00          0          0</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>  %user：CPU处在用户模式下的时间百分比。</li>
+<li>  %nice：CPU处在带NICE值的用户模式下的时间百分比。</li>
+<li>  %system：CPU处在系统模式下的时间百分比。</li>
+<li>  %iowait：CPU等待输入输出完成时间的百分比。</li>
+<li>  %steal：管理程序维护另一个虚拟处理器时，虚拟CPU的无意识等待时间百分比。</li>
+<li>  %idle：CPU空闲时间百分比。</li>
+<li>  rrqm/s: 每秒进行 merge 的读操作数目。即 rmerge/s</li>
+<li>  wrqm/s: 每秒进行 merge 的写操作数目。即 wmerge/s</li>
+<li>  r/s: 每秒完成的读 I/O 设备次数。即 rio/s</li>
+<li>  w/s: 每秒完成的写 I/O 设备次数。即 wio/s</li>
+<li>  rsec/s: 每秒读扇区数。即 rsect/s</li>
+<li>  wsec/s: 每秒写扇区数。即 wsect/s</li>
+<li>  rkB/s: 每秒读K字节数。是 rsect/s 的一半，因为每扇区大小为512字节。</li>
+<li>  wkB/s: 每秒写K字节数。是 wsect/s 的一半。</li>
+<li>  avgrq-sz: 平均每次设备I/O操作的数据大小 (扇区)。</li>
+<li>  avgqu-sz: 平均I/O队列长度。</li>
+<li>  await: 平均每次设备I/O操作的等待时间 (毫秒)。</li>
+<li>  svctm: 平均每次设备I/O操作的服务时间 (毫秒)。</li>
+<li>  %util: 一秒中有百分之多少的时间用于 I/O 操作，即被io消耗的cpu百分比</li>
+</ul>
+<p>磁盘测试工具我们一般使用iperf3，注意数据仅在相同软件相同版本有比较价值</p>
+<h3 id="性能测试工具"><a href="#性能测试工具" class="headerlink" title="性能测试工具"></a>性能测试工具</h3><p><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/gh/Longtao-W/pics@main/20211025/1635139608R-C.d63f9367c74e1dca73ffbcae473118fa?rik=c734OLrGXr8BPg&riu=http://www.brendangregg.com/Perf/linux_observability_tools.png&ehk=nHWnEkal2z+T0vbSwBOdhejyU03bFpVvmJxFTX6A9tA=&risl=&pid=ImgRaw&r=0" alt="See the source image"></p>
+</article><div class="post-copyright"><!--.post-copyright__author--><!--  span.post-copyright-meta= _p('post.copyright.author') + ": "--><!--  span.post-copyright-info--><!--    a(href=authorHref)=author--><!--.post-copyright__type--><!--  span.post-copyright-meta= _p('post.copyright.link') + ": "--><!--  span.post-copyright-info--><!--    a(href=url_for(url))= theme.post_copyright.decode ? decodeURI(url) : url--><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本网站内容均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC-BY-NC-SA</a> 许可协议。转载请注明来自 <a href="https://longtao.fun" target="_blank">LongTao</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%BC%96%E7%A8%8B%E5%8E%9F%E7%90%86/">编程原理</a><a class="post-meta__tags" href="/tags/linux/">linux</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/gh/Longtao-W/pics@main/20211025/1635139608R-C.d63f9367c74e1dca73ffbcae473118fa?rik=c734OLrGXr8BPg&amp;riu=http%3a%2f%2fwww.brendangregg.com%2fPerf%2flinux_observability_tools.png&amp;ehk=nHWnEkal2z%2bT0vbSwBOdhejyU03bFpVvmJxFTX6A9tA%3d&amp;risl=&amp;pid=ImgRaw&amp;r=0" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://gcore.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button button--animated"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://cdn.jsdelivr.net/gh/Longtao-W/pics@main/20210916/wechatpayimg.70ev58ujzsk0.jpg" target="_blank"><img class="post-qr-code-img" data-lazy-src="https://cdn.jsdelivr.net/gh/Longtao-W/pics@main/20210916/wechatpayimg.70ev58ujzsk0.jpg" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="https://cdn.jsdelivr.net/gh/Longtao-W/pics@main/20210916/alipayimg.27lbgw3tra1w.jpg" target="_blank"><img class="post-qr-code-img" data-lazy-src="https://cdn.jsdelivr.net/gh/Longtao-W/pics@main/20210916/alipayimg.27lbgw3tra1w.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><!--if theme.ad && theme.ad.post--><!--  .ads-wrap!=theme.ad.post--><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/metaverse/escapeanalysis/"><!--if theme.lazyload.enable--><!--  img.prev-cover(data-lazy-src=url_for(pagination_cover) onerror=`onerror=null;src='${url_for(theme.error_img.post_page)}'` alt='cover of previous post')--><!--elseimg.prev-cover(src=url_for(pagination_cover) onerror=`onerror=null;src='${url_for(theme.error_img.post_page)}'` alt='cover of previous post')--><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">go逃逸分析</div></div></a></div><div class="next-post pull-right"><a href="/metaverse/diskperformanceestimation/"><!--if theme.lazyload.enable--><!--  img.next-cover(data-lazy-src=url_for(pagination_cover) onerror=`onerror=null;src='${url_for(theme.error_img.post_page)}'` alt='cover of next post')--><!--else--><!--  img.next-cover(src=url_for(pagination_cover) onerror=`onerror=null;src='${url_for(theme.error_img.post_page)}'` alt='cover of next post')--><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">硬盘IO性能估算(IOPS,吞吐量，延时)</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/metaverse/grub/" title="grub介绍及使用"><img class="cover" data-lazy-src="https://cdn.jsdelivr.net/gh/Longtao-W/pics@main/20220221/grub.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-01</div><div class="title">grub介绍及使用</div></div></a></div><div><a href="/metaverse/boot/" title="linux的boot目录"><img class="cover" data-lazy-src="https://cdn.jsdelivr.net/gh/Longtao-W/pics@main/20211025/16351392001-642-png_6_0_0_0_0_0_0_1258.74_1781.819-1259-0-755-1259.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-09-25</div><div class="title">linux的boot目录</div></div></a></div><div><a href="/metaverse/shcandupx/" title="shc与upx加密混淆压缩"><img class="cover" data-lazy-src="https://cdn.jsdelivr.net/gh/Longtao-W/pics@main/20211025/1635140046OIP-C.6nySy7QLC94Nm0SNCoL5UwHaGE?pid=ImgDet&rs=1" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-25</div><div class="title">shc与upx加密混淆压缩</div></div></a></div><div><a href="/metaverse/linuxio/" title="Linux IO模式"><img class="cover" data-lazy-src="https://cdn.jsdelivr.net/gh/Longtao-W/pics@main/20211025/1635139551R-C.33d57d1aac13ec6a4e7f917e0a47bb69?rik=o%2fuWsKRpOPc7MA&riu=http%3a%2f%2fwww.thomas-krenn.com%2fde%2fwikiDE%2fimages%2fd%2fda%2fLinux-io-stack-diagram_v1.0.png&ehk=1OGRYIpfyG0jiVPRMEKwfpXnNXxZpCQUOMRDg4u7Pz0%3d&risl=&pid=ImgRaw&r=0" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-25</div><div class="title">Linux IO模式</div></div></a></div><div><a href="/metaverse/meltdownspectre/" title="幽灵熔断"><img class="cover" data-lazy-src="https://cdn.jsdelivr.net/gh/Longtao-W/pics@main/20211025/1635139657R-C.b99abc88fde8d7734d20066ed62d574f?rik=ikTwDJb6AKBbIg&riu=http%3a%2f%2fimg1.mydrivers.com%2fimg%2f20180326%2f7ad298a21c1e40f69f4eac81007e74a9.png&ehk=oGDeClWmtgCwNv4GlhChppBQcmJ1P2UGK34htcD2Ry0%3d&risl=&pid=ImgRaw&r=0" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-08-25</div><div class="title">幽灵熔断</div></div></a></div><div><a href="/metaverse/memoryoverscore/" title="内存超分原理"><img class="cover" data-lazy-src="https://cdn.jsdelivr.net/gh/Longtao-W/pics@main/20211025/1635139713OIP-C.xGR2ur4Cwbjx7OEW-pjD9gHaDa?pid=ImgDet&rs=1" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-07-25</div><div class="title">内存超分原理</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><!--!=partial('includes/widget/card_announcement', {}, {cache: true})--><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96"><span class="toc-number">1.</span> <span class="toc-text">性能优化</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%B2%97%E7%95%A5%E5%88%86%E6%9E%90"><span class="toc-number">1.0.1.</span> <span class="toc-text">粗略分析</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E7%93%B6%E9%A2%88"><span class="toc-number">1.0.2.</span> <span class="toc-text">内存瓶颈</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#IO%E7%93%B6%E9%A2%88"><span class="toc-number">1.0.3.</span> <span class="toc-text">IO瓶颈</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7"><span class="toc-number">2.</span> <span class="toc-text">性能测试工具</span></a></li></ol></div></div><div class="card-widget ads-wrap"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8213766991056846"crossorigin="anonymous"></script><!-- 竖向 --><ins class="adsbygoogle"style="display:block"data-ad-client="ca-pub-8213766991056846"data-ad-slot="1138527205"data-ad-format="auto"data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div><!--!=partial('includes/widget/card_ad', {}, {cache: true})--><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" data-lazy-src="https://cdn.jsdelivr.net/gh/Longtao-W/pics@main/20210916/avatar.71pjc2scvak0.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">LongTao</div><div class="author-info__description">Ewige Wiederkunft</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">78</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">27</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/eust-w"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/eust-w" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:eustancewu@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="Rss"><i class="fa fa-rss"></i></a><a class="social-icon" href="https://tinyletter.com/longtao" target="_blank" title="subscribe"><i class="fas fa-plus"></i></a><a class="social-icon" href="https://travellings.link" target="_blank" title="traveling"><i class="fas fa-subway"></i></a></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/metaverse/longtaollm/" title="longtaoLM的使用"><img data-lazy-src="https://st2.depositphotos.com/1002075/9896/v/600/depositphotos_98965042-stock-illustration-abstract-tunnel-grid-futuristic-technology.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="longtaoLM的使用"/></a><div class="content"><a class="title" href="/metaverse/longtaollm/" title="longtaoLM的使用">longtaoLM的使用</a><time datetime="2023-02-11T10:20:21.000Z" title="发表于 2023-02-11 18:20:21">2023-02-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/metaverse/codegeex/" title="CodeGeeXr多语言代码生成模型"><img data-lazy-src="https://cdn.jsdelivr.net/gh/Longtao-W/pics@main/22/789225215918222218321111919177951016669119_gopic_.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CodeGeeXr多语言代码生成模型"/></a><div class="content"><a class="title" href="/metaverse/codegeex/" title="CodeGeeXr多语言代码生成模型">CodeGeeXr多语言代码生成模型</a><time datetime="2022-09-28T15:20:21.000Z" title="发表于 2022-09-28 23:20:21">2022-09-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/metaverse/grub/" title="grub介绍及使用"><img data-lazy-src="https://cdn.jsdelivr.net/gh/Longtao-W/pics@main/20220221/grub.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="grub介绍及使用"/></a><div class="content"><a class="title" href="/metaverse/grub/" title="grub介绍及使用">grub介绍及使用</a><time datetime="2022-01-01T12:13:31.000Z" title="发表于 2022-01-01 20:13:31">2022-01-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/metaverse/ubuntu/" title="ubuntu使用指北"><img data-lazy-src="https://cdn.jsdelivr.net/gh/Longtao-W/pics@main/20211124/1637718777Ubuntu-Pink.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ubuntu使用指北"/></a><div class="content"><a class="title" href="/metaverse/ubuntu/" title="ubuntu使用指北">ubuntu使用指北</a><time datetime="2021-11-21T12:12:11.000Z" title="发表于 2021-11-21 20:12:11">2021-11-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/metaverse/collectd/" title="collectd后台监控程序"><img data-lazy-src="https://cdn.jsdelivr.net/gh/Longtao-W/pics@main/20211122/1637548845collectd_logo.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="collectd后台监控程序"/></a><div class="content"><a class="title" href="/metaverse/collectd/" title="collectd后台监控程序">collectd后台监控程序</a><time datetime="2021-11-21T10:20:21.000Z" title="发表于 2021-11-21 18:20:21">2021-11-21</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><!--<div id="canvastime"><canvas id="canvas" style="width:40%;" width="80" height="25"></canvas></div><script type="text/javascript" src="https://jianger.space/assets/js/src/canvas.js?v=5.2.1"></script>--><div class="copyright">&copy;1996 - 2024 By LongTao</div><!--#running-time--><!--<div id="canvastime"><canvas id="canvas" style="width:20%;" width="80" height="25"></canvas></div><script type="text/javascript" src="https://jianger.space/assets/js/src/canvas.js?v=5.2.1"></script>--><!--script.--><!--  setInterval(()=>{let create_time=Math.round(new Date(Date.UTC(0,0,0,0,0,0)).getTime()/1000);let timestamp=Math.round((new Date().getTime()+8*60*60*1000)/1000);let second=timestamp-create_time;let time=new Array(0,0,0,0,0);if(second>=365*24*3600){time[0]=parseInt(second/(365*24*3600));second%=365*24*3600;}if(second>=24*3600){time[1]=parseInt(second/(24*3600));second%=24*3600;}if(second>=3600){time[2]=parseInt(second/3600);second%=3600;}if(second>=60){time[3]=parseInt(second/60);second%=60;}if(second>0){time[4]=second;}currentTimeHtml='西元: '+time[0]+1900+' 年 '+time[1]-30+' 天 '+time[2]+' 时 '+time[3]+' 分 '+time[4]+' 秒';document.getElementById("running-time").innerHTML=currentTimeHtml;},1000);--><!--if theme.footer.custom_text--><!--  .footer_custom_text!=`${theme.footer.custom_text}`--><!--<div class="back-to-top cd-top faa-float animated cd-is-visible" style="top: -900px;"></div>--><div class="icp"><a href="http://beian.miit.gov.cn" target="_blank"><img class="lozad" data-src="/img/guohui.png" onerror="onerror=null;src='/img/guohui.png'" style="padding:0px;vertical-align: text-bottom;"/><span>皖ICP备2021013655号-3</span></a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><!--if theme.aside.enable && theme.aside.button && page.aside !== false--><!--  button#hide-aside-btn(type="button" title=_p('rightside.aside'))--><!--    i.fas.fa-arrows-alt-h--></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button><button id="chat_btn" type="button" title="联系LongTao"><i class="fas fa-headset"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://gcore.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="https://gcore.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    getScript('https://gcore.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(() => {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'default',
+      })
+      true && mermaid.init()
+    })
+  }
+}</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'uJTJiElTQykb6QCQfzn2VYJq-gzGzoHsz',
+      appKey: 'Rotia8PwwXfJoGefuH7bBMFa',
+      placeholder: '请输入您的评论，昵称、邮箱、网址都可以不用填写！',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'zh-CN',
+      recordIP: true,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: true,
+      path: window.location.pathname,
+      requiredFields: ["nick,mail"],
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://gcore.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><div class="aplayer no-destroy" data-id="5420191376" data-server="netease" data-type="playlist" data-fixed="true" data-mini="true" data-listFolded="true" data-order="random" lrcType="1" data-preload="none" data-autoplay="false" muted></div><link rel="stylesheet" type="text/css" href="/css/Lete.css"><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><link rel="stylesheet" type="text/css" href="/css/szgotop.css" /><script type="text/javascript" src="/js/szgotop.js"></script><!--if theme.click_heart && theme.click_heart.enable--><!--  script#click-heart(src=url_for(theme.CDN.click_heart) async mobile=`${theme.click_heart.mobile}`)--><script>(function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/5c69001b.js","daovoice")
+</script><script>var isChatBtn = true
+daovoice('init', {
+  app_id: '5c69001b',},{
+  launcher: { 
+     disableLauncherIcon: isChatBtn // 悬浮 ICON 是否显示
+  },
+});
+daovoice('update');
+
+if (isChatBtn) {
+  var chatBtnFn = () => {
+    var chatBtn = document.getElementById("chat_btn")
+    chatBtn.addEventListener("click", function(){
+      daovoice('show')
+    });
+  }
+  chatBtnFn()
+} else {
+  if (false) {
+    function chatBtnHide () {
+      daovoice('update', {},{
+        launcher: { 
+        disableLauncherIcon: true // 悬浮 ICON 是否显示
+        },
+      });
+    }
+    function chatBtnShow () {
+      daovoice('update', {},{
+        launcher: { 
+        disableLauncherIcon: false // 悬浮 ICON 是否显示
+        },
+      });
+    }
+  }
+}</script><link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://gcore.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://gcore.jsdelivr.net/gh/SerokSSR/cdn/meting.min.js"></script><script src="https://gcore.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config-diff',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: true,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', 'G-HYN1NLVKJG', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+
+document.addEventListener('pjax:send', function () {
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script></div></body></html>

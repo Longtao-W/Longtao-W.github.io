@@ -1,0 +1,412 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>极简的极客法则 | LongTao</title><meta name="keywords" content="编程思想,编程哲学"><meta name="author" content="LongTao"><meta name="copyright" content="LongTao"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="[toc] 写在前面原文是hacker-laws ，作者做了翻译、归纳、整理、夹带私货；阅读hacker laws 有助于coder 更好的开发； here we go! 定律90-9-1 法则 (90–9–1 Principle or 1% Rule)在诸如维基这样的互联网社区中，90% 的用户只看内容并不参与互动，9% 的用户会参与讨论，而只有 1% 的用户会创造内容。 阿姆达尔定律 (Amd">
+<meta property="og:type" content="article">
+<meta property="og:title" content="极简的极客法则">
+<meta property="og:url" content="https://longtao.fun/metaverse/hacklaw/index.html">
+<meta property="og:site_name" content="LongTao">
+<meta property="og:description" content="[toc] 写在前面原文是hacker-laws ，作者做了翻译、归纳、整理、夹带私货；阅读hacker laws 有助于coder 更好的开发； here we go! 定律90-9-1 法则 (90–9–1 Principle or 1% Rule)在诸如维基这样的互联网社区中，90% 的用户只看内容并不参与互动，9% 的用户会参与讨论，而只有 1% 的用户会创造内容。 阿姆达尔定律 (Amd">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Longtao-W/pics@main/20211025/16351385831600banner.1.jpg">
+<meta property="article:published_time" content="2021-08-09T15:20:21.000Z">
+<meta property="article:modified_time" content="2024-06-30T10:35:56.308Z">
+<meta property="article:author" content="LongTao">
+<meta property="article:tag" content="编程思想">
+<meta property="article:tag" content="编程哲学">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/Longtao-W/pics@main/20211025/16351385831600banner.1.jpg"><link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/Longtao-W/pics@main/20210916/avatar.71pjc2scvak0.jpg"><link rel="canonical" href="https://longtao.fun/metaverse/hacklaw/"><link rel="preconnect" href="//gcore.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><meta name="google-site-verification" content="sdbwdXxK4U7I4ceYAnHYcpwGX8xQ4-hNdNrcjv_JBlQ"/><meta name="msvalidate.01" content="code-fMOdRFFRNC"/><meta name="baidu-site-verification" content="code-HVJYJcKMKl"/><meta name="yandex-verification" content="3c4b526968322ac8"/><meta name="baidu_union_verify" content="2ab9384b0a4e3ca4ca1f3afb8ba13666"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?e21652fdbf95387cb76733c761128f39";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-HYN1NLVKJG"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-HYN1NLVKJG');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#1d2c47","bgDark":"#121212","position":"top-center"},
+  source: {
+    jQuery: 'https://gcore.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://gcore.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://gcore.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://gcore.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://gcore.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-06-30 18:35:56'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script><link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet"><link rel="stylesheet" href="/css/background.css"><style type="text/css">.aplayer.aplayer-fixed.aplayer-narrow .aplayer-body{left:-66px!important}.aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover{left:0!important}</style><link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/aplayer@1.7.0/dist/APlayer.min.css"><div id="aplayer"></div><script src="https://gcore.jsdelivr.net/npm/meting@2/dist/Meting.min.js" async></script><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="LongTao" type="application/atom+xml">
+</head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" data-lazy-src="https://cdn.jsdelivr.net/gh/Longtao-W/pics@main/20210916/avatar.71pjc2scvak0.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">78</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">27</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-cat"></i><span> 兴趣</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/game/"><i class="fa-fw fas fa-gamepad"></i><span> 游戏</span></a></li><li><a class="site-page child" href="/philosophy/"><i class="fa-fw fas fa-yin-yang"></i><span> 哲学</span></a></li><li><a class="site-page child" href="/physic/"><i class="fa-fw fas fa-atom"></i><span> 物理</span></a></li><li><a class="site-page child" href="/math/"><i class="fa-fw fas fa-brain"></i><span> 数学</span></a></li><li><a class="site-page child" href="/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/"><i class="fa-fw fas fa-yin-yang"></i><span> 计算机</span></a></li><li><a class="site-page child" href="/222"><span> にじげん</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-box"></i><span> 项目</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/os/"><i class="fa-fw fas fa-passport"></i><span> 开源项目</span></a></li><li><a class="site-page child" href="/ppt/"><i class="fa-fw fas fa-chart-bar"></i><span> ppt存档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-map"></i><span> 导航</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-address-book"></i><span> 友链</span></a></li><li><a class="site-page child" href="/sites/"><i class="fa-fw fas fa-tools"></i><span> 工具</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-heart"></i><span> 关于</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/about/web.html"><i class="fa-fw fas fa-blog"></i><span> 关于本站</span></a></li><li><a class="site-page child" href="/about/author.html"><i class="fa-fw fas fa-user"></i><span> 关于作者</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/other/"><i class="fa-fw fas fa-bars"></i><span> 其它</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/gh/Longtao-W/pics@main/20211025/16351385831600banner.1.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">LongTao</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-book"></i><span> 文章</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-cat"></i><span> 兴趣</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/game/"><i class="fa-fw fas fa-gamepad"></i><span> 游戏</span></a></li><li><a class="site-page child" href="/philosophy/"><i class="fa-fw fas fa-yin-yang"></i><span> 哲学</span></a></li><li><a class="site-page child" href="/physic/"><i class="fa-fw fas fa-atom"></i><span> 物理</span></a></li><li><a class="site-page child" href="/math/"><i class="fa-fw fas fa-brain"></i><span> 数学</span></a></li><li><a class="site-page child" href="/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/"><i class="fa-fw fas fa-yin-yang"></i><span> 计算机</span></a></li><li><a class="site-page child" href="/222"><span> にじげん</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-box"></i><span> 项目</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/os/"><i class="fa-fw fas fa-passport"></i><span> 开源项目</span></a></li><li><a class="site-page child" href="/ppt/"><i class="fa-fw fas fa-chart-bar"></i><span> ppt存档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-map"></i><span> 导航</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-address-book"></i><span> 友链</span></a></li><li><a class="site-page child" href="/sites/"><i class="fa-fw fas fa-tools"></i><span> 工具</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-heart"></i><span> 关于</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/about/web.html"><i class="fa-fw fas fa-blog"></i><span> 关于本站</span></a></li><li><a class="site-page child" href="/about/author.html"><i class="fa-fw fas fa-user"></i><span> 关于作者</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/other/"><i class="fa-fw fas fa-bars"></i><span> 其它</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">极简的极客法则</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2021-08-09T15:20:21.000Z" title="undefined 2021-08-09 23:20:21">2021-08-09</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/">编程技术</a></span></div><div class="meta-secondline"></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>[toc]</p>
+<h3 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h3><p>原文是<a target="_blank" rel="noopener" href="https://github.com/dwmkerr/hacker-laws">hacker-laws</a> ，作者做了翻译、归纳、整理、夹带私货；<br>阅读hacker laws 有助于coder 更好的开发； here we go!</p>
+<h2 id="定律"><a href="#定律" class="headerlink" title="定律"></a>定律</h2><h3 id="90-9-1-法则-90–9–1-Principle-or-1-Rule"><a href="#90-9-1-法则-90–9–1-Principle-or-1-Rule" class="headerlink" title="90-9-1 法则 (90–9–1 Principle or 1% Rule)"></a>90-9-1 法则 (90–9–1 Principle or 1% Rule)</h3><p>在诸如维基这样的互联网社区中，90% 的用户只看内容并不参与互动，9% 的用户会参与讨论，而只有 1% 的用户会创造内容。</p>
+<h3 id="阿姆达尔定律-Amdahl’s-Law"><a href="#阿姆达尔定律-Amdahl’s-Law" class="headerlink" title="阿姆达尔定律 (Amdahl’s Law)"></a>阿姆达尔定律 (Amdahl’s Law)</h3><p>并行计算中，有些部分可以被多核心并行处理，有些部分只能串行处理，增加核心对速度的提升的收益会边际递减</p>
+<h3 id="破窗效应-The-Broken-Windows-Theory"><a href="#破窗效应-The-Broken-Windows-Theory" class="headerlink" title="破窗效应 (The Broken Windows Theory)"></a>破窗效应 (The Broken Windows Theory)</h3><p>在破窗理论中认为，恶化若不修复，会导致进一步更严重的恶化参见：</p>
+<h3 id="布鲁克斯法则-Brooks’s-Law"><a href="#布鲁克斯法则-Brooks’s-Law" class="headerlink" title="布鲁克斯法则 (Brooks’s Law)"></a>布鲁克斯法则 (Brooks’s Law)</h3><p>软件开发后期，添加人力只会使项目开发得更慢。因为有些事情无法分割，切增加沟通成本（和阿姆达尔有点像）<br>《人月神话》大篇幅在讲这个</p>
+<h3 id="CAP-定理-CAP-Theorem-or-Brewer’s-Theorem"><a href="#CAP-定理-CAP-Theorem-or-Brewer’s-Theorem" class="headerlink" title="CAP 定理 (CAP Theorem or Brewer’s Theorem)"></a>CAP 定理 (CAP Theorem or Brewer’s Theorem)</h3><p>CAP 定理由 Eric Brewer 所定义，它指出对于分布式数据存储来说，不可能同时满足以下三点，可以有侧重，例如金融交易系统的强一致性，淘宝的可用性等：</p>
+<ul>
+<li>一致性 (Consistency)：每个终端都会接收到 最新的数据，或者返回错误。</li>
+<li>可用性 (Availability): 每个终端都会接收到一个 非错误的响应，但不能保证该数据是 最新的数据。</li>
+<li>分区容错性 (Partition Tolerance)：当节点之间任意数量的网络请求失败时，系统能按预期继续运行（脑裂后还可以保证使用）。</li>
+</ul>
+<h3 id="康威定律-Conway’s-Law"><a href="#康威定律-Conway’s-Law" class="headerlink" title="康威定律 (Conway’s Law)"></a>康威定律 (Conway’s Law)</h3><p>如果一个组织被分散成许多小而无联系的单元，那么它开发的软件也是小而分散的。组织架构会体现在软件架构上（分形）</p>
+<h3 id="坎宁汉姆定律-Cunningham’s-Law"><a href="#坎宁汉姆定律-Cunningham’s-Law" class="headerlink" title="坎宁汉姆定律 (Cunningham’s Law)"></a>坎宁汉姆定律 (Cunningham’s Law)</h3><p>在网络上想得到正确答案的最好方法不是提问题，而是发布一个错误的答案，引起辩论（不建议这么做，现在网上已经一堆的错误回答）</p>
+<h3 id="邓巴数字-Dunbar’s-Number"><a href="#邓巴数字-Dunbar’s-Number" class="headerlink" title="邓巴数字 (Dunbar’s Number)"></a>邓巴数字 (Dunbar’s Number)</h3><p>邓巴数字是对一个人能够保持稳定社会关系的人数的认知极限——在这种关系中，邓巴数字的估计值一般在 100 至 250 之间。所以有些以扁平化为珍宝的公司在扩张时管理会有问题，对我们个人的启发是，可以交一两个社交牛的朋友，可以交换新事物。</p>
+<h3 id="邓宁-克鲁格效应-The-Dunning-Kruger-Effect"><a href="#邓宁-克鲁格效应-The-Dunning-Kruger-Effect" class="headerlink" title="邓宁-克鲁格效应 (The Dunning-Kruger Effect)"></a>邓宁-克鲁格效应 (The Dunning-Kruger Effect)</h3><p>无能的人往往不会意识到自己的无能。而得出正确答案所需要的技能，正是你认识到何为正确答案所需要的技能。虚幻的优越性产自无知</p>
+<h3 id="费茨法则-Fitts’s-Law"><a href="#费茨法则-Fitts’s-Law" class="headerlink" title="费茨法则 (Fitts’s Law)"></a>费茨法则 (Fitts’s Law)</h3><p>该法则指出，移动到目标区域所需的时间是到目标的距离除以目标宽度的函数。<br>费茨法则决定了在设计 UX 或 UI 时，交互元素应该尽可能大，而用户注意力区域和交互元素之间的距离应该尽可能小。这会对设计产生影响，例如将相近的任务进行归类分组等。</p>
+<h3 id="盖尔定律-Gall’s-Law"><a href="#盖尔定律-Gall’s-Law" class="headerlink" title="盖尔定律 (Gall’s Law)"></a>盖尔定律 (Gall’s Law)</h3><p>完整的复杂系统不是设计成的，而是一步步的修补和更改变成现在的样子。</p>
+<h3 id="古德哈特定律-Goodhart’s-Law"><a href="#古德哈特定律-Goodhart’s-Law" class="headerlink" title="古德哈特定律 (Goodhart’s Law)"></a>古德哈特定律 (Goodhart’s Law)</h3><p>当一个措施本身成为目标时，它就不再是一个好的措施，像为了kpi而kpi，在方法中迷失目的</p>
+<h3 id="汉隆的剃刀-Hanlon’s-Razor"><a href="#汉隆的剃刀-Hanlon’s-Razor" class="headerlink" title="汉隆的剃刀 (Hanlon’s Razor)"></a>汉隆的剃刀 (Hanlon’s Razor)</h3><p>能解释为愚蠢的，就不要解释为恶意的</p>
+<h3 id="席克定律-Hick’s-Law-or-Hick-Hyman-Law"><a href="#席克定律-Hick’s-Law-or-Hick-Hyman-Law" class="headerlink" title="席克定律 (Hick’s Law or Hick-Hyman Law)"></a>席克定律 (Hick’s Law or Hick-Hyman Law)</h3><p>决策时间和可供选择的选项数量呈对数增长关系。</p>
+<h3 id="侯世达定律-Hofstadter’s-Law"><a href="#侯世达定律-Hofstadter’s-Law" class="headerlink" title="侯世达定律 (Hofstadter’s Law)"></a>侯世达定律 (Hofstadter’s Law)</h3><p>结果往往低于目标，即使考虑到了这个点。</p>
+<h3 id="哈特伯定律-Hutber’s-Law"><a href="#哈特伯定律-Hutber’s-Law" class="headerlink" title="哈特伯定律 (Hutber’s Law)"></a>哈特伯定律 (Hutber’s Law)</h3><p>对一个系统的改进会导致其他部分的恶化；或者它会将其他的恶化隐藏起来，并导致系统整体状态的退化。</p>
+<h3 id="技术成熟度曲线-The-Hype-Cycle-or-Amara’s-Law"><a href="#技术成熟度曲线-The-Hype-Cycle-or-Amara’s-Law" class="headerlink" title="技术成熟度曲线 (The Hype Cycle or Amara’s Law)"></a>技术成熟度曲线 (The Hype Cycle or Amara’s Law)</h3><p>人有动物性-短时。我们倾向于过高估计技术在短期内的影响，并低估长期效应。</p>
+<h3 id="隐式接口定律-Hyrum’s-Law-or-The-Law-of-Implicit-Interfaces"><a href="#隐式接口定律-Hyrum’s-Law-or-The-Law-of-Implicit-Interfaces" class="headerlink" title="隐式接口定律 (Hyrum’s Law or The Law of Implicit Interfaces)"></a>隐式接口定律 (Hyrum’s Law or The Law of Implicit Interfaces)</h3><p>当你的 API 有足够多的用户时，API 的所有行为最终都会被其他人所依赖，大家不会一直看文档，很多公司都在取消文档工程师，转而提升用户使用体验。</p>
+<h3 id="柯林汉定律-Kernighan’s-Law"><a href="#柯林汉定律-Kernighan’s-Law" class="headerlink" title="柯林汉定律 (Kernighan’s Law)"></a>柯林汉定律 (Kernighan’s Law)</h3><p>调试在一开始就比编写程序困难一倍。因此，按照定义，如果你的代码写得非常巧妙，那么你就没有足够的能力来调试它。</p>
+<h3 id="林纳斯定律-Linus’s-Law"><a href="#林纳斯定律-Linus’s-Law" class="headerlink" title="林纳斯定律 (Linus’s Law)"></a>林纳斯定律 (Linus’s Law)</h3><p>简单地说，能够看到问题的人越多，有人解决过相关的问题或事情的可能性就越高。</p>
+<h3 id="梅特卡夫定律-Metcalfe’s-Law"><a href="#梅特卡夫定律-Metcalfe’s-Law" class="headerlink" title="梅特卡夫定律 (Metcalfe’s Law)"></a>梅特卡夫定律 (Metcalfe’s Law)</h3><p>在网络理论中，系统的价值约等于系统用户数的平方，人的作用很大。</p>
+<h3 id="摩尔定律-Moore’s-Law"><a href="#摩尔定律-Moore’s-Law" class="headerlink" title="摩尔定律 (Moore’s Law)"></a>摩尔定律 (Moore’s Law)</h3><p>集成电路中的晶体管数量大约每两年翻一番。价格不变，芯片性能两年一番。</p>
+<h3 id="墨菲定律-Murphy’s-Law-Sod’s-Law"><a href="#墨菲定律-Murphy’s-Law-Sod’s-Law" class="headerlink" title="墨菲定律 (Murphy’s Law / Sod’s Law)"></a>墨菲定律 (Murphy’s Law / Sod’s Law)</h3><p>凡是可能出错的事就一定会出错。</p>
+<h3 id="奥卡姆剃刀-Occam’s-Razor"><a href="#奥卡姆剃刀-Occam’s-Razor" class="headerlink" title="奥卡姆剃刀 (Occam’s Razor)"></a>奥卡姆剃刀 (Occam’s Razor)</h3><p>如无必要，勿增实体。</p>
+<h3 id="帕金森定理-Parkinson’s-Law"><a href="#帕金森定理-Parkinson’s-Law" class="headerlink" title="帕金森定理 (Parkinson’s Law)"></a>帕金森定理 (Parkinson’s Law)</h3><p>在工作能够完成的时限内，工作量会一直增加，直到所有可用时间都被填满为止，所以别卷了，工作是做不完的。</p>
+<h3 id="过早优化效应-Premature-Optimization-Effect"><a href="#过早优化效应-Premature-Optimization-Effect" class="headerlink" title="过早优化效应 (Premature Optimization Effect)"></a>过早优化效应 (Premature Optimization Effect)</h3><p>过早优化是万恶之源。</p>
+<h3 id="普特定律-Putt’s-Law"><a href="#普特定律-Putt’s-Law" class="headerlink" title="普特定律 (Putt’s Law)"></a>普特定律 (Putt’s Law)</h3><p>技术由两类人主导，一类是纯粹的管理人员， 一类是纯粹的技术人员。</p>
+<h3 id="里德定律-Reed’s-Law"><a href="#里德定律-Reed’s-Law" class="headerlink" title="里德定律 (Reed’s Law)"></a>里德定律 (Reed’s Law)</h3><p>大型网络，尤其是社交网络的效用会随着网络的大小呈指数级扩增，规模效应</p>
+<h3 id="复杂性守恒定律-The-Law-of-Conservation-of-Complexity-or-Tesler’s-Law"><a href="#复杂性守恒定律-The-Law-of-Conservation-of-Complexity-or-Tesler’s-Law" class="headerlink" title="复杂性守恒定律 (The Law of Conservation of Complexity or Tesler’s Law)"></a>复杂性守恒定律 (The Law of Conservation of Complexity or Tesler’s Law)</h3><p>系统中存在着一定程度的复杂性，并且不能减少。</p>
+<h3 id="得墨忒耳定律-The-Law-of-Demeter"><a href="#得墨忒耳定律-The-Law-of-Demeter" class="headerlink" title="得墨忒耳定律 (The Law of Demeter)"></a>得墨忒耳定律 (The Law of Demeter)</h3><p>得墨忒耳定律又称最少知识原则，是一条与面向对象语言有关的软件设计原则，只和已知的打交道。</p>
+<h3 id="抽象泄漏定律-The-Law-of-Leaky-Abstractions"><a href="#抽象泄漏定律-The-Law-of-Leaky-Abstractions" class="headerlink" title="抽象泄漏定律 (The Law of Leaky Abstractions)"></a>抽象泄漏定律 (The Law of Leaky Abstractions)</h3><p>在某种程度上，所有非平凡的抽象都是有泄漏的。<br>过度依赖抽象，加上对底层过程的理解不足，实际上使得问题在某些情况下更加复杂。</p>
+<h3 id="帕金森琐碎定理-The-Law-of-Triviality"><a href="#帕金森琐碎定理-The-Law-of-Triviality" class="headerlink" title="帕金森琐碎定理 (The Law of Triviality)"></a>帕金森琐碎定理 (The Law of Triviality)</h3><p>群体将给予更多的时间和注意力来处理琐碎的问题，而不是用来处理严肃而实质性的问题。</p>
+<h3 id="Unix-哲学-The-Unix-Philosophy"><a href="#Unix-哲学-The-Unix-Philosophy" class="headerlink" title="Unix 哲学 (The Unix Philosophy)"></a>Unix 哲学 (The Unix Philosophy)</h3><p>软件组件应该很小，并专注于做一件特定的事情。将小而简单以及定义良好的单元组合在一起，而不是使用大而复杂的多用途程序，可以更轻松地构建系统。</p>
+<h3 id="Spotify-模型-The-Spotify-Model"><a href="#Spotify-模型-The-Spotify-Model" class="headerlink" title="Spotify 模型 (The Spotify Model)"></a>Spotify 模型 (The Spotify Model)</h3><p>团队围绕功能而非技术进行组织。</p>
+<h3 id="沃德勒定律-Wadler’s-Law"><a href="#沃德勒定律-Wadler’s-Law" class="headerlink" title="沃德勒定律 (Wadler’s Law)"></a>沃德勒定律 (Wadler’s Law)</h3><p>任何语言设计中，讨论下面列表中某个要素所花费的总时间与其位置成正比。</p>
+<ol>
+<li>语义 (Semantics)</li>
+<li>语法 (Syntax)</li>
+<li>词法 (Lexical syntax)</li>
+<li>注释语法 (Lexical syntax of comments)<br>简而言之，在语义上花费一个小时，就要在注释语法上花费八个小时</li>
+</ol>
+<h3 id="惠顿定律-Wheaton’s-Law"><a href="#惠顿定律-Wheaton’s-Law" class="headerlink" title="惠顿定律 (Wheaton’s Law)"></a>惠顿定律 (Wheaton’s Law)</h3><p>不要像个傻子一样。</p>
+<h2 id="原则"><a href="#原则" class="headerlink" title="原则"></a>原则</h2><p>原则通常是与设计相关的准则。</p>
+<h3 id="乔治·伯克斯定律-All-Models-Are-Wrong-or-George-Box’s-Law"><a href="#乔治·伯克斯定律-All-Models-Are-Wrong-or-George-Box’s-Law" class="headerlink" title="乔治·伯克斯定律 (All Models Are Wrong or George Box’s Law)"></a>乔治·伯克斯定律 (All Models Are Wrong or George Box’s Law)</h3><p>这一原则表明，所有的系统模型都是有缺陷的，但只要它们没有太多缺陷，那便有可能是有用的。这一原则源于统计学，同时也适用于科学和计算模型。</p>
+<h3 id="切斯特森围栏-Chesterson’s-Fence"><a href="#切斯特森围栏-Chesterson’s-Fence" class="headerlink" title="切斯特森围栏 (Chesterson’s Fence)"></a>切斯特森围栏 (Chesterson’s Fence)</h3><p>在了解现有情况背后的原因之前，不应该进行改进。</p>
+<h3 id="死海效应-The-Dead-Sea-Effect"><a href="#死海效应-The-Dead-Sea-Effect" class="headerlink" title="死海效应 (The Dead Sea Effect)"></a>死海效应 (The Dead Sea Effect)</h3><p>死海效应表明，在任何一个组织中，工程师的技能、才华和效能往往与他们在公司的时间呈反比。</p>
+<h3 id="呆伯特法则-The-Dilbert-Principle"><a href="#呆伯特法则-The-Dilbert-Principle" class="headerlink" title="呆伯特法则 (The Dilbert Principle)"></a>呆伯特法则 (The Dilbert Principle)</h3><p>公司会倾向于系统地将工作能力差的员工提升到管理层，以使他们脱离工作流程（在国内目前没有）。</p>
+<h3 id="帕累托法则-The-Pareto-Principle-or-The-80-20-Rule"><a href="#帕累托法则-The-Pareto-Principle-or-The-80-20-Rule" class="headerlink" title="帕累托法则 (The Pareto Principle or The 80/20 Rule)"></a>帕累托法则 (The Pareto Principle or The 80/20 Rule)</h3><p>生活中大多数事情不是均匀分布的。<br>这个原则也被称为<strong>二八法则</strong>，<strong>重要的少数法则</strong>和<strong>因素稀疏原则</strong>。</p>
+<h3 id="舍基原理-The-Shirky-Principle"><a href="#舍基原理-The-Shirky-Principle" class="headerlink" title="舍基原理 (The Shirky Principle)"></a>舍基原理 (The Shirky Principle)</h3><p>各机构会努力保留他们能够解决的问题。<br>当一个人不理解自己的工作就能够获得酬劳时，那么他就很难再去了解这份工作了！</p>
+<h3 id="彼得原理-The-Peter-Principle"><a href="#彼得原理-The-Peter-Principle" class="headerlink" title="彼得原理 (The Peter Principle)"></a>彼得原理 (The Peter Principle)</h3><p>在等级制度中，人往往会被提升到他们的“无法胜任的水平。</p>
+<h3 id="鲁棒性原则-The-Robustness-Principle-or-Postel’s-Law"><a href="#鲁棒性原则-The-Robustness-Principle-or-Postel’s-Law" class="headerlink" title="鲁棒性原则 (The Robustness Principle or Postel’s Law)"></a>鲁棒性原则 (The Robustness Principle or Postel’s Law)</h3><p>在自己所做的事情上要保守, 在接受别人的事情上要自由。</p>
+<h3 id="SOLID"><a href="#SOLID" class="headerlink" title="SOLID"></a>SOLID</h3><ul>
+<li>S：单一功能原则：有且有一个单一的功能，并且该功能应该由这个类完全封装起来</li>
+<li>O：开闭原则：对于扩展是开放的，但是对于修改是封闭的</li>
+<li>L：里氏替换原则：子类可以扩展父类的功能，但不能改变父类原有的功能</li>
+<li>I：接口隔离原则：建立单一接口，不要建立庞大臃肿的接口</li>
+<li>D：依赖反转原则 ：不要太多耦合<br>这些是 <a target="_blank" rel="noopener" href="https://github.com/nusr/hacker-laws-zh#todo">Object-Oriented Programming</a> 的关键原则。诸如此类的设计原则能够帮助开发人员构建更易于维护的系统。</li>
+</ul>
+<h3 id="不要重复你自己原则-The-DRY-Principle"><a href="#不要重复你自己原则-The-DRY-Principle" class="headerlink" title="不要重复你自己原则 (The DRY Principle)"></a>不要重复你自己原则 (The DRY Principle)</h3><p>系统中，每一块知识都必须是单一、明确而权威的。</p>
+<h3 id="KISS-原则-The-KISS-Principle"><a href="#KISS-原则-The-KISS-Principle" class="headerlink" title="KISS 原则 (The KISS Principle)"></a>KISS 原则 (The KISS Principle)</h3><p>保持简单和直白。</p>
+<h3 id="你不需要它原则-YAGNI"><a href="#你不需要它原则-YAGNI" class="headerlink" title="你不需要它原则 (YAGNI)"></a>你不需要它原则 (YAGNI)</h3><p>只有当你需要某些东西的时候，才去实现它们，而不是在你预见的时候。如无必要，勿增实体</p>
+<h3 id="分布式计算的谬论-The-Fallacies-of-Distributed-Computing"><a href="#分布式计算的谬论-The-Fallacies-of-Distributed-Computing" class="headerlink" title="分布式计算的谬论 (The Fallacies of Distributed Computing)"></a>分布式计算的谬论 (The Fallacies of Distributed Computing)</h3><p>不要做以下假设</p>
+<ul>
+<li>网络可靠</li>
+<li>延迟为零</li>
+<li>带宽无限</li>
+<li>网络安全</li>
+<li>拓扑恒定</li>
+<li>单一管理员</li>
+<li>运输成本为零</li>
+<li>网络为同构的</li>
+</ul>
+</article><div class="post-copyright"><!--.post-copyright__author--><!--  span.post-copyright-meta= _p('post.copyright.author') + ": "--><!--  span.post-copyright-info--><!--    a(href=authorHref)=author--><!--.post-copyright__type--><!--  span.post-copyright-meta= _p('post.copyright.link') + ": "--><!--  span.post-copyright-info--><!--    a(href=url_for(url))= theme.post_copyright.decode ? decodeURI(url) : url--><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本网站内容均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC-BY-NC-SA</a> 许可协议。转载请注明来自 <a href="https://longtao.fun" target="_blank">LongTao</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3/">编程思想</a><a class="post-meta__tags" href="/tags/%E7%BC%96%E7%A8%8B%E5%93%B2%E5%AD%A6/">编程哲学</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/gh/Longtao-W/pics@main/20211025/16351385831600banner.1.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://gcore.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button button--animated"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://cdn.jsdelivr.net/gh/Longtao-W/pics@main/20210916/wechatpayimg.70ev58ujzsk0.jpg" target="_blank"><img class="post-qr-code-img" data-lazy-src="https://cdn.jsdelivr.net/gh/Longtao-W/pics@main/20210916/wechatpayimg.70ev58ujzsk0.jpg" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="https://cdn.jsdelivr.net/gh/Longtao-W/pics@main/20210916/alipayimg.27lbgw3tra1w.jpg" target="_blank"><img class="post-qr-code-img" data-lazy-src="https://cdn.jsdelivr.net/gh/Longtao-W/pics@main/20210916/alipayimg.27lbgw3tra1w.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><!--if theme.ad && theme.ad.post--><!--  .ads-wrap!=theme.ad.post--><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/metaverse/cpu/"><!--if theme.lazyload.enable--><!--  img.prev-cover(data-lazy-src=url_for(pagination_cover) onerror=`onerror=null;src='${url_for(theme.error_img.post_page)}'` alt='cover of previous post')--><!--elseimg.prev-cover(src=url_for(pagination_cover) onerror=`onerror=null;src='${url_for(theme.error_img.post_page)}'` alt='cover of previous post')--><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">CPU简介</div></div></a></div><div class="next-post pull-right"><a href="/metaverse/dependencyinjection/"><!--if theme.lazyload.enable--><!--  img.next-cover(data-lazy-src=url_for(pagination_cover) onerror=`onerror=null;src='${url_for(theme.error_img.post_page)}'` alt='cover of next post')--><!--else--><!--  img.next-cover(src=url_for(pagination_cover) onerror=`onerror=null;src='${url_for(theme.error_img.post_page)}'` alt='cover of next post')--><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">从Typhoon台风到控制反转-依赖注入</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/metaverse/razor/" title="奥卡姆剃刀和他的剃刀兄弟们"><img class="cover" data-lazy-src="https://cdn.jsdelivr.net/gh/Longtao-W/pics@main/20211025/16351387531635138750R-C.0e97e07ba887fc2749a84cccae618c68?rik=FZmc5Ny4zeCsUQ&riu=http%3a%2f%2fi1.hdslb.com%2fbfs%2farchive%2fec505613c3384672433cdccf648a507181dbad6b.jpg&ehk=wWqbCY%2b6I7hRIvOsJYVNPyjq4AsBHmVuFKy1c36hztc%3d&risl=&pid=ImgRaw&r=0" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-21</div><div class="title">奥卡姆剃刀和他的剃刀兄弟们</div></div></a></div><div><a href="/metaverse/cleancode/" title="代码整洁之道"><img class="cover" data-lazy-src="https://cdn.jsdelivr.net/gh/Longtao-W/pics@main/20211025/1635138678command.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-23</div><div class="title">代码整洁之道</div></div></a></div><div><a href="/metaverse/dependencyinjection/" title="从Typhoon台风到控制反转-依赖注入"><img class="cover" data-lazy-src="https://cdn.jsdelivr.net/gh/Longtao-W/pics@main/20211025/1635133883rappel-772262__340.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-25</div><div class="title">从Typhoon台风到控制反转-依赖注入</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><!--!=partial('includes/widget/card_announcement', {}, {cache: true})--><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9A%E5%BE%8B"><span class="toc-number"></span> <span class="toc-text">定律</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#90-9-1-%E6%B3%95%E5%88%99-90%E2%80%939%E2%80%931-Principle-or-1-Rule"><span class="toc-number">1.</span> <span class="toc-text">90-9-1 法则 (90–9–1 Principle or 1% Rule)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%BF%E5%A7%86%E8%BE%BE%E5%B0%94%E5%AE%9A%E5%BE%8B-Amdahl%E2%80%99s-Law"><span class="toc-number">2.</span> <span class="toc-text">阿姆达尔定律 (Amdahl’s Law)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A0%B4%E7%AA%97%E6%95%88%E5%BA%94-The-Broken-Windows-Theory"><span class="toc-number">3.</span> <span class="toc-text">破窗效应 (The Broken Windows Theory)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%83%E9%B2%81%E5%85%8B%E6%96%AF%E6%B3%95%E5%88%99-Brooks%E2%80%99s-Law"><span class="toc-number">4.</span> <span class="toc-text">布鲁克斯法则 (Brooks’s Law)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CAP-%E5%AE%9A%E7%90%86-CAP-Theorem-or-Brewer%E2%80%99s-Theorem"><span class="toc-number">5.</span> <span class="toc-text">CAP 定理 (CAP Theorem or Brewer’s Theorem)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%B7%E5%A8%81%E5%AE%9A%E5%BE%8B-Conway%E2%80%99s-Law"><span class="toc-number">6.</span> <span class="toc-text">康威定律 (Conway’s Law)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9D%8E%E5%AE%81%E6%B1%89%E5%A7%86%E5%AE%9A%E5%BE%8B-Cunningham%E2%80%99s-Law"><span class="toc-number">7.</span> <span class="toc-text">坎宁汉姆定律 (Cunningham’s Law)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%82%93%E5%B7%B4%E6%95%B0%E5%AD%97-Dunbar%E2%80%99s-Number"><span class="toc-number">8.</span> <span class="toc-text">邓巴数字 (Dunbar’s Number)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%82%93%E5%AE%81-%E5%85%8B%E9%B2%81%E6%A0%BC%E6%95%88%E5%BA%94-The-Dunning-Kruger-Effect"><span class="toc-number">9.</span> <span class="toc-text">邓宁-克鲁格效应 (The Dunning-Kruger Effect)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B4%B9%E8%8C%A8%E6%B3%95%E5%88%99-Fitts%E2%80%99s-Law"><span class="toc-number">10.</span> <span class="toc-text">费茨法则 (Fitts’s Law)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%96%E5%B0%94%E5%AE%9A%E5%BE%8B-Gall%E2%80%99s-Law"><span class="toc-number">11.</span> <span class="toc-text">盖尔定律 (Gall’s Law)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%A4%E5%BE%B7%E5%93%88%E7%89%B9%E5%AE%9A%E5%BE%8B-Goodhart%E2%80%99s-Law"><span class="toc-number">12.</span> <span class="toc-text">古德哈特定律 (Goodhart’s Law)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B1%89%E9%9A%86%E7%9A%84%E5%89%83%E5%88%80-Hanlon%E2%80%99s-Razor"><span class="toc-number">13.</span> <span class="toc-text">汉隆的剃刀 (Hanlon’s Razor)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%AD%E5%85%8B%E5%AE%9A%E5%BE%8B-Hick%E2%80%99s-Law-or-Hick-Hyman-Law"><span class="toc-number">14.</span> <span class="toc-text">席克定律 (Hick’s Law or Hick-Hyman Law)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%AF%E4%B8%96%E8%BE%BE%E5%AE%9A%E5%BE%8B-Hofstadter%E2%80%99s-Law"><span class="toc-number">15.</span> <span class="toc-text">侯世达定律 (Hofstadter’s Law)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%93%88%E7%89%B9%E4%BC%AF%E5%AE%9A%E5%BE%8B-Hutber%E2%80%99s-Law"><span class="toc-number">16.</span> <span class="toc-text">哈特伯定律 (Hutber’s Law)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%80%E6%9C%AF%E6%88%90%E7%86%9F%E5%BA%A6%E6%9B%B2%E7%BA%BF-The-Hype-Cycle-or-Amara%E2%80%99s-Law"><span class="toc-number">17.</span> <span class="toc-text">技术成熟度曲线 (The Hype Cycle or Amara’s Law)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9A%90%E5%BC%8F%E6%8E%A5%E5%8F%A3%E5%AE%9A%E5%BE%8B-Hyrum%E2%80%99s-Law-or-The-Law-of-Implicit-Interfaces"><span class="toc-number">18.</span> <span class="toc-text">隐式接口定律 (Hyrum’s Law or The Law of Implicit Interfaces)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%AF%E6%9E%97%E6%B1%89%E5%AE%9A%E5%BE%8B-Kernighan%E2%80%99s-Law"><span class="toc-number">19.</span> <span class="toc-text">柯林汉定律 (Kernighan’s Law)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%97%E7%BA%B3%E6%96%AF%E5%AE%9A%E5%BE%8B-Linus%E2%80%99s-Law"><span class="toc-number">20.</span> <span class="toc-text">林纳斯定律 (Linus’s Law)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A2%85%E7%89%B9%E5%8D%A1%E5%A4%AB%E5%AE%9A%E5%BE%8B-Metcalfe%E2%80%99s-Law"><span class="toc-number">21.</span> <span class="toc-text">梅特卡夫定律 (Metcalfe’s Law)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%91%A9%E5%B0%94%E5%AE%9A%E5%BE%8B-Moore%E2%80%99s-Law"><span class="toc-number">22.</span> <span class="toc-text">摩尔定律 (Moore’s Law)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A2%A8%E8%8F%B2%E5%AE%9A%E5%BE%8B-Murphy%E2%80%99s-Law-Sod%E2%80%99s-Law"><span class="toc-number">23.</span> <span class="toc-text">墨菲定律 (Murphy’s Law &#x2F; Sod’s Law)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A5%A5%E5%8D%A1%E5%A7%86%E5%89%83%E5%88%80-Occam%E2%80%99s-Razor"><span class="toc-number">24.</span> <span class="toc-text">奥卡姆剃刀 (Occam’s Razor)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%95%E9%87%91%E6%A3%AE%E5%AE%9A%E7%90%86-Parkinson%E2%80%99s-Law"><span class="toc-number">25.</span> <span class="toc-text">帕金森定理 (Parkinson’s Law)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%87%E6%97%A9%E4%BC%98%E5%8C%96%E6%95%88%E5%BA%94-Premature-Optimization-Effect"><span class="toc-number">26.</span> <span class="toc-text">过早优化效应 (Premature Optimization Effect)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%99%AE%E7%89%B9%E5%AE%9A%E5%BE%8B-Putt%E2%80%99s-Law"><span class="toc-number">27.</span> <span class="toc-text">普特定律 (Putt’s Law)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8C%E5%BE%B7%E5%AE%9A%E5%BE%8B-Reed%E2%80%99s-Law"><span class="toc-number">28.</span> <span class="toc-text">里德定律 (Reed’s Law)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%8D%E6%9D%82%E6%80%A7%E5%AE%88%E6%81%92%E5%AE%9A%E5%BE%8B-The-Law-of-Conservation-of-Complexity-or-Tesler%E2%80%99s-Law"><span class="toc-number">29.</span> <span class="toc-text">复杂性守恒定律 (The Law of Conservation of Complexity or Tesler’s Law)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%97%E5%A2%A8%E5%BF%92%E8%80%B3%E5%AE%9A%E5%BE%8B-The-Law-of-Demeter"><span class="toc-number">30.</span> <span class="toc-text">得墨忒耳定律 (The Law of Demeter)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%BD%E8%B1%A1%E6%B3%84%E6%BC%8F%E5%AE%9A%E5%BE%8B-The-Law-of-Leaky-Abstractions"><span class="toc-number">31.</span> <span class="toc-text">抽象泄漏定律 (The Law of Leaky Abstractions)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%95%E9%87%91%E6%A3%AE%E7%90%90%E7%A2%8E%E5%AE%9A%E7%90%86-The-Law-of-Triviality"><span class="toc-number">32.</span> <span class="toc-text">帕金森琐碎定理 (The Law of Triviality)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Unix-%E5%93%B2%E5%AD%A6-The-Unix-Philosophy"><span class="toc-number">33.</span> <span class="toc-text">Unix 哲学 (The Unix Philosophy)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Spotify-%E6%A8%A1%E5%9E%8B-The-Spotify-Model"><span class="toc-number">34.</span> <span class="toc-text">Spotify 模型 (The Spotify Model)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B2%83%E5%BE%B7%E5%8B%92%E5%AE%9A%E5%BE%8B-Wadler%E2%80%99s-Law"><span class="toc-number">35.</span> <span class="toc-text">沃德勒定律 (Wadler’s Law)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%83%A0%E9%A1%BF%E5%AE%9A%E5%BE%8B-Wheaton%E2%80%99s-Law"><span class="toc-number">36.</span> <span class="toc-text">惠顿定律 (Wheaton’s Law)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E5%88%99"><span class="toc-number"></span> <span class="toc-text">原则</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B9%94%E6%B2%BB%C2%B7%E4%BC%AF%E5%85%8B%E6%96%AF%E5%AE%9A%E5%BE%8B-All-Models-Are-Wrong-or-George-Box%E2%80%99s-Law"><span class="toc-number">1.</span> <span class="toc-text">乔治·伯克斯定律 (All Models Are Wrong or George Box’s Law)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%87%E6%96%AF%E7%89%B9%E6%A3%AE%E5%9B%B4%E6%A0%8F-Chesterson%E2%80%99s-Fence"><span class="toc-number">2.</span> <span class="toc-text">切斯特森围栏 (Chesterson’s Fence)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%BB%E6%B5%B7%E6%95%88%E5%BA%94-The-Dead-Sea-Effect"><span class="toc-number">3.</span> <span class="toc-text">死海效应 (The Dead Sea Effect)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%91%86%E4%BC%AF%E7%89%B9%E6%B3%95%E5%88%99-The-Dilbert-Principle"><span class="toc-number">4.</span> <span class="toc-text">呆伯特法则 (The Dilbert Principle)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%95%E7%B4%AF%E6%89%98%E6%B3%95%E5%88%99-The-Pareto-Principle-or-The-80-20-Rule"><span class="toc-number">5.</span> <span class="toc-text">帕累托法则 (The Pareto Principle or The 80&#x2F;20 Rule)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%88%8D%E5%9F%BA%E5%8E%9F%E7%90%86-The-Shirky-Principle"><span class="toc-number">6.</span> <span class="toc-text">舍基原理 (The Shirky Principle)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BD%BC%E5%BE%97%E5%8E%9F%E7%90%86-The-Peter-Principle"><span class="toc-number">7.</span> <span class="toc-text">彼得原理 (The Peter Principle)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%B2%81%E6%A3%92%E6%80%A7%E5%8E%9F%E5%88%99-The-Robustness-Principle-or-Postel%E2%80%99s-Law"><span class="toc-number">8.</span> <span class="toc-text">鲁棒性原则 (The Robustness Principle or Postel’s Law)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SOLID"><span class="toc-number">9.</span> <span class="toc-text">SOLID</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E8%A6%81%E9%87%8D%E5%A4%8D%E4%BD%A0%E8%87%AA%E5%B7%B1%E5%8E%9F%E5%88%99-The-DRY-Principle"><span class="toc-number">10.</span> <span class="toc-text">不要重复你自己原则 (The DRY Principle)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#KISS-%E5%8E%9F%E5%88%99-The-KISS-Principle"><span class="toc-number">11.</span> <span class="toc-text">KISS 原则 (The KISS Principle)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%A0%E4%B8%8D%E9%9C%80%E8%A6%81%E5%AE%83%E5%8E%9F%E5%88%99-YAGNI"><span class="toc-number">12.</span> <span class="toc-text">你不需要它原则 (YAGNI)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%A1%E7%AE%97%E7%9A%84%E8%B0%AC%E8%AE%BA-The-Fallacies-of-Distributed-Computing"><span class="toc-number">13.</span> <span class="toc-text">分布式计算的谬论 (The Fallacies of Distributed Computing)</span></a></li></ol></div></div><div class="card-widget ads-wrap"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8213766991056846"crossorigin="anonymous"></script><!-- 竖向 --><ins class="adsbygoogle"style="display:block"data-ad-client="ca-pub-8213766991056846"data-ad-slot="1138527205"data-ad-format="auto"data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div><!--!=partial('includes/widget/card_ad', {}, {cache: true})--><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" data-lazy-src="https://cdn.jsdelivr.net/gh/Longtao-W/pics@main/20210916/avatar.71pjc2scvak0.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">LongTao</div><div class="author-info__description">Ewige Wiederkunft</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">78</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">27</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/eust-w"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/eust-w" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:eustancewu@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="Rss"><i class="fa fa-rss"></i></a><a class="social-icon" href="https://tinyletter.com/longtao" target="_blank" title="subscribe"><i class="fas fa-plus"></i></a><a class="social-icon" href="https://travellings.link" target="_blank" title="traveling"><i class="fas fa-subway"></i></a></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/metaverse/longtaollm/" title="longtaoLM的使用"><img data-lazy-src="https://st2.depositphotos.com/1002075/9896/v/600/depositphotos_98965042-stock-illustration-abstract-tunnel-grid-futuristic-technology.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="longtaoLM的使用"/></a><div class="content"><a class="title" href="/metaverse/longtaollm/" title="longtaoLM的使用">longtaoLM的使用</a><time datetime="2023-02-11T10:20:21.000Z" title="发表于 2023-02-11 18:20:21">2023-02-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/metaverse/codegeex/" title="CodeGeeXr多语言代码生成模型"><img data-lazy-src="https://cdn.jsdelivr.net/gh/Longtao-W/pics@main/22/789225215918222218321111919177951016669119_gopic_.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CodeGeeXr多语言代码生成模型"/></a><div class="content"><a class="title" href="/metaverse/codegeex/" title="CodeGeeXr多语言代码生成模型">CodeGeeXr多语言代码生成模型</a><time datetime="2022-09-28T15:20:21.000Z" title="发表于 2022-09-28 23:20:21">2022-09-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/metaverse/grub/" title="grub介绍及使用"><img data-lazy-src="https://cdn.jsdelivr.net/gh/Longtao-W/pics@main/20220221/grub.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="grub介绍及使用"/></a><div class="content"><a class="title" href="/metaverse/grub/" title="grub介绍及使用">grub介绍及使用</a><time datetime="2022-01-01T12:13:31.000Z" title="发表于 2022-01-01 20:13:31">2022-01-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/metaverse/ubuntu/" title="ubuntu使用指北"><img data-lazy-src="https://cdn.jsdelivr.net/gh/Longtao-W/pics@main/20211124/1637718777Ubuntu-Pink.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ubuntu使用指北"/></a><div class="content"><a class="title" href="/metaverse/ubuntu/" title="ubuntu使用指北">ubuntu使用指北</a><time datetime="2021-11-21T12:12:11.000Z" title="发表于 2021-11-21 20:12:11">2021-11-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/metaverse/collectd/" title="collectd后台监控程序"><img data-lazy-src="https://cdn.jsdelivr.net/gh/Longtao-W/pics@main/20211122/1637548845collectd_logo.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="collectd后台监控程序"/></a><div class="content"><a class="title" href="/metaverse/collectd/" title="collectd后台监控程序">collectd后台监控程序</a><time datetime="2021-11-21T10:20:21.000Z" title="发表于 2021-11-21 18:20:21">2021-11-21</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><!--<div id="canvastime"><canvas id="canvas" style="width:40%;" width="80" height="25"></canvas></div><script type="text/javascript" src="https://jianger.space/assets/js/src/canvas.js?v=5.2.1"></script>--><div class="copyright">&copy;1996 - 2024 By LongTao</div><!--#running-time--><!--<div id="canvastime"><canvas id="canvas" style="width:20%;" width="80" height="25"></canvas></div><script type="text/javascript" src="https://jianger.space/assets/js/src/canvas.js?v=5.2.1"></script>--><!--script.--><!--  setInterval(()=>{let create_time=Math.round(new Date(Date.UTC(0,0,0,0,0,0)).getTime()/1000);let timestamp=Math.round((new Date().getTime()+8*60*60*1000)/1000);let second=timestamp-create_time;let time=new Array(0,0,0,0,0);if(second>=365*24*3600){time[0]=parseInt(second/(365*24*3600));second%=365*24*3600;}if(second>=24*3600){time[1]=parseInt(second/(24*3600));second%=24*3600;}if(second>=3600){time[2]=parseInt(second/3600);second%=3600;}if(second>=60){time[3]=parseInt(second/60);second%=60;}if(second>0){time[4]=second;}currentTimeHtml='西元: '+time[0]+1900+' 年 '+time[1]-30+' 天 '+time[2]+' 时 '+time[3]+' 分 '+time[4]+' 秒';document.getElementById("running-time").innerHTML=currentTimeHtml;},1000);--><!--if theme.footer.custom_text--><!--  .footer_custom_text!=`${theme.footer.custom_text}`--><!--<div class="back-to-top cd-top faa-float animated cd-is-visible" style="top: -900px;"></div>--><div class="icp"><a href="http://beian.miit.gov.cn" target="_blank"><img class="lozad" data-src="/img/guohui.png" onerror="onerror=null;src='/img/guohui.png'" style="padding:0px;vertical-align: text-bottom;"/><span>皖ICP备2021013655号-3</span></a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><!--if theme.aside.enable && theme.aside.button && page.aside !== false--><!--  button#hide-aside-btn(type="button" title=_p('rightside.aside'))--><!--    i.fas.fa-arrows-alt-h--></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button><button id="chat_btn" type="button" title="联系LongTao"><i class="fas fa-headset"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://gcore.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="https://gcore.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>if (document.getElementsByClassName('mermaid').length) {
+  if (window.mermaidJsLoad) mermaid.init()
+  else {
+    getScript('https://gcore.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(() => {
+      window.mermaidJsLoad = true
+      mermaid.initialize({
+        theme: 'default',
+      })
+      true && mermaid.init()
+    })
+  }
+}</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'uJTJiElTQykb6QCQfzn2VYJq-gzGzoHsz',
+      appKey: 'Rotia8PwwXfJoGefuH7bBMFa',
+      placeholder: '请输入您的评论，昵称、邮箱、网址都可以不用填写！',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'zh-CN',
+      recordIP: true,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: true,
+      path: window.location.pathname,
+      requiredFields: ["nick,mail"],
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://gcore.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><div class="aplayer no-destroy" data-id="5420191376" data-server="netease" data-type="playlist" data-fixed="true" data-mini="true" data-listFolded="true" data-order="random" lrcType="1" data-preload="none" data-autoplay="false" muted></div><link rel="stylesheet" type="text/css" href="/css/Lete.css"><script src="https://code.jquery.com/jquery-2.1.4.min.js"></script><link rel="stylesheet" type="text/css" href="/css/szgotop.css" /><script type="text/javascript" src="/js/szgotop.js"></script><!--if theme.click_heart && theme.click_heart.enable--><!--  script#click-heart(src=url_for(theme.CDN.click_heart) async mobile=`${theme.click_heart.mobile}`)--><script>(function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/5c69001b.js","daovoice")
+</script><script>var isChatBtn = true
+daovoice('init', {
+  app_id: '5c69001b',},{
+  launcher: { 
+     disableLauncherIcon: isChatBtn // 悬浮 ICON 是否显示
+  },
+});
+daovoice('update');
+
+if (isChatBtn) {
+  var chatBtnFn = () => {
+    var chatBtn = document.getElementById("chat_btn")
+    chatBtn.addEventListener("click", function(){
+      daovoice('show')
+    });
+  }
+  chatBtnFn()
+} else {
+  if (false) {
+    function chatBtnHide () {
+      daovoice('update', {},{
+        launcher: { 
+        disableLauncherIcon: true // 悬浮 ICON 是否显示
+        },
+      });
+    }
+    function chatBtnShow () {
+      daovoice('update', {},{
+        launcher: { 
+        disableLauncherIcon: false // 悬浮 ICON 是否显示
+        },
+      });
+    }
+  }
+}</script><link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://gcore.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://gcore.jsdelivr.net/gh/SerokSSR/cdn/meting.min.js"></script><script src="https://gcore.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config-diff',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: true,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', 'G-HYN1NLVKJG', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+
+document.addEventListener('pjax:send', function () {
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script></div></body></html>
